@@ -34,9 +34,9 @@ class Student(AbstractPerson):
 class Professor(AbstractPerson):
 	
 	#роль 'Преподаватель'
-	education_course = CharField(max_length = 100, verbose_name = 'Предмет')
-	is_lecturer = BooleanField(verbose_name = 'Лектор')
-	is_practician = BooleanField(verbose_name = 'Преподаватель практики')
+	education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
+	is_lecturer = models.BooleanField(verbose_name = 'Лектор')
+	is_practician = models.BooleanField(verbose_name = 'Преподаватель практики')
 	
 	def __str__(self):
     
@@ -46,7 +46,7 @@ class Professor(AbstractPerson):
 class ScientificDirector(AbstractPerson):
 	
 	#роль 'Научный руководитель'
-	education_course = CharField(max_length = 100, verbose_name = 'Предмет')
+	education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
 	
 	def __str__(self):
     
@@ -56,9 +56,9 @@ class ScientificDirector(AbstractPerson):
 class Profile(models.Model):
     
     user = AutoOneToOneField(User, related_name = 'profile', verbose_name=('User'), primary_key = True)
-    cooperator = models.ForeignKey(Cooperator, verbose_name = 'Сотрудник')     
-    student = models.ForeignKey(Student, verbose_name = 'Студент')
-	  professor = models.ForeignKey(Professor, verbose_name = 'Преподаватель')
-	  scientific_director = models.ForeignKey(ScientificDirector, verbose_name = 'Научный руководитель')
+    cooperator = models.ForeignKey(Cooperator, verbose_name = 'Сотрудник', null = True)     
+    student = models.ForeignKey(Student, verbose_name = 'Студент', null = True)
+    professor = models.ForeignKey(Professor, verbose_name = 'Преподаватель', null = True)
+    scientific_director = models.ForeignKey(ScientificDirector, verbose_name = 'Научный руководитель', null = True)
 
     
