@@ -34,7 +34,7 @@ class Professor(AbstractPerson):
 	education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
 	
 	def __str__(self):
-		return "{0} {1} {2}, login: {3}, password: {4}, education_course: {7}".format(
+		return "{0} {1} {2}, login: {3}, password: {4}, education_course: {5}".format(
 			self.surname, self.name, self.patronymic, self.email, self.password, self.education_course)
 
 class ScientificDirector(AbstractPerson):
