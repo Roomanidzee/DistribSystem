@@ -35,4 +35,6 @@ class ScientificDirector(AbstractPerson):
 class Profile(models.Model):
     
     user = AutoOneToOneField(User, related_name = 'profile', verbose_name=('User'), primary_key = True)
-    cooperator = models.ForeignKey(Cooperator, verbose_name = 'Сотрудник')     
+    cooperator = models.ForeignKey(Cooperator, verbose_name = 'Сотрудник') 
+	professor = models.ForeignKey(Professor, verbose_name = 'Преподаватель')
+	scientific_director = models.ForeignKey(ScientificDirector, verbose_name = 'Научный руководитель')
