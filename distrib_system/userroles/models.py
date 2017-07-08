@@ -6,54 +6,55 @@ class AbstractPerson(models.Model):
     surname = models.CharField(max_length = 100, verbose_name = 'Фамилия')
     name = models.CharField(max_length = 100, verbose_name = 'Имя')
     patronymic = models.CharField(max_length = 100, verbose_name = 'Отчество')
-    email = models.EmailField(max_length = 50, verbose_name = 'Почта')
-    password = models.CharField(max_length = 16, verbose_name = 'Пароль')
     
     
 class Cooperator(AbstractPerson):
     #роль 'Сотрудник'
     work = models.CharField(max_length = 50, verbose_name = 'Специализация')
+    user = AutoOneToOneField(User, related_name = 'cooperator', verbose_name=('User'), primary_key = True)
 
     def __str__(self):
-        return "{0} {1} {2}, login: {3}, password: {4}, work: {5}".format(
-            self.surname, self.name, self.patronymic, self.email, self.password, self.work)
+        return "{0} {1} {2}, work: {3}".format(
+            self.surname, self.name, self.patronymic, self.work)
         
         
 class Student(AbstractPerson):
     #роль 'Студент'
     group = models.CharField(max_length = 10, verbose_name = 'Группа студента')
     course = models.CharField(max_length = 10, verbose_name = 'Курс студента')
+    user = AutoOneToOneField(User, related_name = 'student', verbose_name=('User'), primary_key = True)
     
     def __str__(self):
-        return "{0} {1} {2}, login: {3}, password: {4}, group: {5}, course: {6}".format(
-            self.surname, self.name, self.patronymic, self.email, self.password, self.group, self.course)
+        return "{0} {1} {2}, group: {3}, course: {4}".format(
+            self.surname, self.name, self.patronymic, self.group, self.course)
         
 
 class Professor(AbstractPerson):
-	#роль 'Преподаватель'
-	education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
-	
-	def __str__(self):
-		return "{0} {1} {2}, login: {3}, password: {4}, education_course: {5}".format(
-			self.surname, self.name, self.patronymic, self.email, self.password, self.education_course)
+    #роль 'Преподаватель'
+    education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
+    user = AutoOneToOneField(User, related_name = 'professor', verbose_name=('User'), primary_key = True)
+    
+    def __str__(self):
+        return "{0} {1} {2}, education_course: {3}".format(
+			self.surname, self.name, self.patronymic, self.education_course)
 
 class ScientificDirector(AbstractPerson):
-	#роль 'Научный руководитель'
-	education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
-	
-	def __str__(self):
-		return "{0} {1} {2}, login: {3}, password: {4}, education_course: {5}".format(
-			self.surname, self.name, self.patronymic, self.email, self.password, self.education_course)
-	     
+    #роль 'Научный руководитель'
+    education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
+    user = AutoOneToOneField(User, related_name = 'scientific_director', verbose_name=('User'), primary_key = True)
+
+    def __str__(self):
+        return "{0} {1} {2}, education_course: {3}".format(
+            self.surname, self.name, self.patronymic, self.education_course)
+             
 class Profile(models.Model):
     user = AutoOneToOneField(User, related_name = 'profile', verbose_name=('User'), primary_key = True)
-    cooperator = models.ForeignKey(Cooperator, verbose_name = 'Сотрудник', null = True)     
-    student = models.ForeignKey(Student, verbose_name = 'Студент', null = True)
-    professor = models.ForeignKey(Professor, verbose_name = 'Преподаватель', null = True)
-    scientific_director = models.ForeignKey(ScientificDirector, verbose_name = 'Научный руководитель', null = True)
+    bio = models.TextField(max_length=500, blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         
-        return "Cooperator : {0}\n, Student: {1}\n, Professor: {2}\n, ScientificDirector: {3}\n".format(
-            str(self.cooperator), str(self.student), str(self.professor), str(self.scientific_director))
+        return "Bio : {0}\n, location: {1}, birth date: {2}".format(
+            self.bio, self.location, self.birth_date)
     
