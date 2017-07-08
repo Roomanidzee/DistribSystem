@@ -52,5 +52,8 @@ class Profile(models.Model):
     professor = models.ForeignKey(Professor, verbose_name = 'Преподаватель', null = True)
     scientific_director = models.ForeignKey(ScientificDirector, verbose_name = 'Научный руководитель', null = True)
 
-
+    def __str__(self):
+        
+        return "Cooperator : {0}\n, Student: {1}\n, Professor: {2}\n, ScientificDirector: {3}\n".format(
+            str(self.cooperator), str(self.student), str(self.professor), str(self.scientific_director))
     
