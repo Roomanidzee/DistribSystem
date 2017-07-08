@@ -8,12 +8,11 @@ class AbstractPerson(models.Model):
     patronymic = models.CharField(max_length = 100, verbose_name = 'Отчество')
     email = models.EmailField(max_length = 50, verbose_name = 'Почта')
     password = models.CharField(max_length = 16, verbose_name = 'Пароль')
-    work = models.CharField(max_length = 50, verbose_name = 'Специализация')
     
     
 class Cooperator(AbstractPerson):
     #роль 'Сотрудник'
-    
+    work = models.CharField(max_length = 50, verbose_name = 'Специализация')
     def __str__(self):
         
         return "{0} {1} {2}, login: {3}, password : {4}, work : {5}".format(
@@ -22,12 +21,12 @@ class Cooperator(AbstractPerson):
         
 class Student(AbstractPerson):
     #роль 'Студент'
-    group = models.CharField(max_length = 20, verbose_name = 'Группа студента')
-    course = models.CharField(max_length = 20, verbose_name = 'Курс студента')
+    group = models.CharField(max_length = 10, verbose_name = 'Группа студента')
+    course = models.CharField(max_length = 10, verbose_name = 'Курс студента')
     def __str__(self):
         
-        return "{0} {1} {2}, login: {3}, password : {4}, work : {5}".format(
-            self.surname, self.name, self.patronymic, self.email, self.password, self.work)
+        return "{0} {1} {2}, login: {3}, password : {4}, group : {5}, course : {6}".format(
+            self.surname, self.name, self.patronymic, self.email, self.password, self.group, self.course)
         
         
 class Profile(models.Model):
