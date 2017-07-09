@@ -10,6 +10,7 @@ class Cooperator(models.Model):
     def __str__(self):
         return "{0} - {1}".format(str(self.user), self.work)
         
+        
 class Student(models.Model):
     #роль 'Студент'
     group = models.CharField(max_length = 10, verbose_name = 'Группа студента')
@@ -18,6 +19,7 @@ class Student(models.Model):
     def __str__(self):
         return "{0} - {1}".format(str(self.user), self.group)
         
+        
 class Professor(models.Model):
     #роль 'Преподаватель'
     education_course = models.CharField(max_length = 100, verbose_name = 'Предмет')
@@ -25,6 +27,7 @@ class Professor(models.Model):
     
     def __str__(self):
         return "{0} - {1}".format(str(self.user), self.education_course)
+
 
 class ScientificDirector(models.Model):
     #роль 'Научный руководитель'
