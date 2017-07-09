@@ -17,7 +17,8 @@ class Lab(models.Model):
     lab_description = models.CharField(max_length = 1200, verbose_name = 'Описание лаборатории')
     
     def __str__(self):
-        return str(self.lab_name)
+        return "Название лаборатории: {0}, руководитель: {1}".format(
+            self.lab_name, self.lab_scientific_director)
     
     
 class Course(models.Model):
@@ -29,7 +30,8 @@ class Course(models.Model):
 
     
     def __str__(self):
-        return str(self.course_name)
+        return "Название курса: {0}, профессор: {1}".format(
+            self.course_name, self.course_professor)
     
     
     '''
@@ -39,9 +41,10 @@ class Course(models.Model):
 class Practice(models.Model):
     #практика
     practice_name = models.CharField(max_length = 100, verbose_name = 'Название практики')
-    practice_responcible = models.CharField(max_length = 100, verbose_name = 'Куратор практики')
+    practice_responcible = models.CharField(max_length = 100, verbose_name = 'Куратор')
     practice_students = models.CharField(max_length = 600, verbose_name = 'Список студентов')
     practice_description = models.CharField(max_length = 1200, verbose_name = 'Описание практики')
     
     def __str__(self):
-        return str(self.practice_name)
+        return "Название практики: {0}, куратор: {1}".format(
+            self.practice_name, self.practice_responcible)
