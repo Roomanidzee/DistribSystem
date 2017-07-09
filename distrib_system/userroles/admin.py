@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cooperator, Student, Professor, ScientificDirector, Profile
+from .models import Cooperator, Student, Professor, ScientificDirector
 
 # Register your models here.
 admin.site.register(Cooperator)
