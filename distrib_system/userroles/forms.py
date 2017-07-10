@@ -22,5 +22,4 @@ class UserForm(forms.ModelForm):
     
 class UserProfileForm(forms.ModelForm):
     
-    type = forms.ChoiceField(widget = forms.Select, label = "Должность")
-    patronymic = forms.CharField(max_length = 50, required = True, label = "Отчество")         
+    type = forms.ChoiceField(widget = forms.Select, label = "Должность")        
