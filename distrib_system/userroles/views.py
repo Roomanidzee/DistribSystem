@@ -14,37 +14,36 @@ def register(request):
     
     user = User()
     user_profile = UserProfile()
-    
-    if request.method == "POST":
         
-        user_form = UserForm(request.POST, instance = user)
-        user_profile_form = UserProfileForm(request.POST, instance = user_profile)
+    user_form = UserForm(request.POST, instance = user)
+    user_profile_form = UserProfileForm(request.POST, instance = user_profile)
         
-        if user_form.is_valid() and user_profile_form.is_valid():
+    if user_form.is_valid() and user_profile_form.is_valid():
             
-            user_data = user_form.cleaned_data
-            user.username = user_data['username']
-            user.last_name = user_data['lastname']
-            user.first_name = user_data['firstname']
-            user.email = user_data['email']
-            user.set_password(user_data['pass1'])
-            user.save()
+        user_data = user_form.cleaned_data
+        user.username = user_data['username']
+        user.last_name = user_data['last_name']
+        user.first_name = user_data['first_name']
+        user.email = user_data['email']
+        user.set_password(user_data['password'])
+        user.save()
             
-            user_profile = user.get_profile()
-            user_profile_data = user_profile_form.cleaned_data
-            user_profile.type = user_profile_data['type']
-            user_profile.save()
+        user_profile = user.get_profile()
+        user_profile_data = user_profile_form.cleaned_data
+        user_profile.type = user_profile_data['type']
+        user_profile.patronymic = user_profile_data['patronymic']
+        user_profile.save()
             
-            user = authenticate(username = user_data['username'], password = user_data['pass1'])
-            login(request, user)
-            return HttpResponseRedirect("/profile/")
+        user = authenticate(username = user_data['username'], password = user_data['pass1'])
+        login(request, user)
+        return HttpResponse("profile/")
         
-    else:
+    context = {
+        "form": user_form,
+        "profile_form": user_profile_form,
+    }
         
-        userForm = UserForm( instance = user )
-        userProfileForm = UserProfileForm( instance = user_profile )
-        
-        return render_to_response("register.html", { "user_": user, "userProfile": user_profile, "userForm": userForm, "userProfileForm": userProfileForm }, context_instance = RequestContext( request ) )
+    return render(request, 'register.html', context)
     
 @login_required
 def my_profile(request):
