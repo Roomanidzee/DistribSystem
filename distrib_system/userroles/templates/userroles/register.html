@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DistribSystem</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		header {
+		width: 100%;
+		background-size: 100%
+		background-color:#ffffff;
+		}
+
+		body{
+			background-color: #ffffff;
+			font-family: 'Bree Serif', serif;
+		}
+
+		h1{
+			text-align: center;
+			color: #012a77;
+		}
+
+		.button input{
+			
+			height: 40px;
+			width: 400px;
+			line-height: 10px;
+			background: #012a77;
+			color: white;
+			border-bottom-right-radius: 15px;
+			border-bottom-left-radius: 15px;
+			text-transform: uppercase;
+		}
+
+		.form-row input {
+			float: center;
+			height: 18px;
+			line-height: 10px;
+			padding: 10px;
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-radius: 10px;
+		}
+
+		.reg-form{
+			width: 400px;
+			height: 356px;
+			background-color: #e3e3e3;
+			border-top-right-radius: 15px;
+			border-top-left-radius: 15px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div align="center">
+			<!--<img src="http://kpfu.ru/portal/docs/F1440851335/orEy9xA1kGo.jpg" width="40%">-->
+			<img src="\Users\Asus\Desktop\Проект\fv5xn_croper_ru.jpeg" width="40%">
+		</div>
+	</header>
+
+
+	<h1>Регистрация</h1>
+
+	<div align="center">
+	<form class="reg-form" action="index.html" method="post">
+	<table>
+    {% csrf_token %}
+    {{ form.as_p }}
+		<tr class="form-row">
+			<td width="150px">Фамилия</td>
+			<td>
+				{{ form.last_name }}
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">Имя</td>
+			<td>
+				{{ form.first_name }}
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">Отчество</td>
+			<td>
+				<input type="text" id="form_mname" name="middle_name">
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">E-mail</td>
+			<td>
+				{{ form.email }}
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">Имя пользователя</td>
+			<td>
+				{{ form.username }}
+			</td>
+		</tr>
+
+		<tr class="form-row">
+		<td width="150px">Пол</td>
+		<td>
+			<input type="radio" id="form_sex" name="sex" value="m">
+			муж.
+			<input type="radio" id="form_sex" name="sex" value="w">
+			жен.
+		</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="50px">Должность</td><br>
+			<td>
+				<input type="checkbox" id="position" name="position" value="student">Студент<br/>
+				<input type="checkbox" id="position" name="position" value="professor">Преподаватель<br/>	
+				<input type="checkbox" id="position" name="position" value="co-worker">Сотрудник<br/>
+				<input type="checkbox" id="position" name="position" value="scientific_director">Научный руководитель<br/>
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">Пароль</td>
+			<td>
+				{{ form.password }}
+			</td>
+		</tr>
+
+		<tr class="form-row">
+			<td width="150px">Повтор пароля</td>
+			<td>
+				<input type="password" id="password" name="repeat-password">
+			</td>
+		</tr>
+	</table>
+    
+    <div class="button">
+		<input type="submit" value="Зарегистрироваться">
+	</div>
+	
+	</form>
+	</div>
+</body>
+</html>

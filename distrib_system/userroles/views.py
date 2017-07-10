@@ -33,7 +33,6 @@ def register(request):
             user_profile = user.get_profile()
             user_profile_data = user_profile_form.cleaned_data
             user_profile.type = user_profile_data['type']
-            user_profile.patronymic = user_profile_data['patronymic']
             user_profile.save()
             
             user = authenticate(username = user_data['username'], password = user_data['pass1'])
