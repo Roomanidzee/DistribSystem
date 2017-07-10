@@ -45,11 +45,11 @@ def register(request):
         userForm = UserForm( instance = user )
         userProfileForm = UserProfileForm( instance = user_profile )
         
-        return render_to_response("register.html", { "user_": user, "userProfile": user_profile, "userForm": user_form, "userProfileForm": user_profile_form }, context_instance = RequestContext( request ) )
+        return render_to_response("register.html", { "user_": user, "userProfile": user_profile, "userForm": userForm, "userProfileForm": userProfileForm }, context_instance = RequestContext( request ) )
     
 @login_required
 def my_profile(request):
     
-     """Профиль текущего пользователя"""
-     user = request.user
-     return render_to_response( "accounts/card.html", { "user": user }, context_instance = RequestContext( request ) )    
+    """Профиль текущего пользователя"""
+    user = request.user
+    return render_to_response( "accounts/card.html", { "user": user }, context_instance = RequestContext( request ) )    
