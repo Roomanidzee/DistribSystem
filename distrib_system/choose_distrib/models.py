@@ -1,37 +1,33 @@
 from django.db import models
 from userroles.models import UserProfile
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
-class Lab(models.Model):   
+class Container(models.Model):   
     #лаборатория 
-    lab_name = models.CharField(max_length = 100, verbose_name = 'Название лаборатории')
-    
-    user = models.ForeignKey(UserProfile, related_name = "lab_user")
-    lab_director = models.OneToOneField(UserProfile)
+    container_name = models.CharField(max_length = 100, verbose_name = 'Название лаборатории')
+    container_director = models.OneToOneField(UserProfile, on_delete= models.CASCADE)
+    container_capacity = models.IntegerField(
+        default = 0,
+        validators=[MaxValueValidator(200), MinValueValidator(0)]
+    )
     
     
     def __str__(self):
         return "Название лаборатории: {0}".format(self.lab_name)
-    
-    
-class Course(models.Model):
-    #курс по выбору
-    course_name = models.CharField(max_length = 100, verbose_name = 'Название курса')
 
-    user = models.ForeignKey(UserProfile, related_name = "course_user")
-    course_professor = models.OneToOneField(UserProfile)
+
+class Request(models.Model):
+    #Запрос в "контейнер"
+    student = models.ForeignKey(UserProfile, on_delete= models.CASCADE)
+    container = models.ForeignKey(Container, on_delete= models.CASCADE)
     
-    def __str__(self):
-        return "Название курса: {0}, профессор: {1}".format(self.course_name)
+    '''
+    0 = SENDED
+    1 = ACCEPTED
+    2 = DECLINED 
+    '''
+    status = models.IntegerField(default = 0)
     
-   
-class Practice(models.Model):
-    #практика
-    practice_name = models.CharField(max_length = 100, verbose_name = 'Название практики')
-    
-    user = models.ForeignKey(UserProfile, related_name = "practice_user")
-    practice_responsible = models.OneToOneField(UserProfile)
-    
-    def __str__(self):
-        return "Название практики: {0}".format(self.practice_name)
+    send_date = models.DateField(auto_now=True)
