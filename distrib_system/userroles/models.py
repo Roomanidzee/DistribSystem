@@ -1,11 +1,12 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User, Group
+from choose_distrib.models import *
     
 class UserProfile(models.Model):
     
     user = models.OneToOneField(User)
-    patronymic = models.CharField(max_length = 50, verbose_name = 'Отчество')
+    containers = models.ManyToManyField(Container)
 
 
 class StudentManager(models.Manager):

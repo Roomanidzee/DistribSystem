@@ -17,7 +17,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
     
-    def clean_pass2(self):
+    def __clean_pass2__(self):
         
         if(self.cleaned_data["pass2"] != self.cleaned_data.get("password", "")):
             
@@ -27,7 +27,6 @@ class UserForm(forms.ModelForm):
     
 class UserProfileForm(forms.ModelForm):
     
-    type = forms.ChoiceField(widget = forms.Select, label = "Должность")
     patronymic = forms.CharField(max_length = 50, required = True, label = "Отчество")         
     
     class Meta:
