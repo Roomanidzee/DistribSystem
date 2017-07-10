@@ -67,6 +67,7 @@
 	<form class="reg-form" action="index.html" method="post">
 	<table>
     {% csrf_token %}
+    {{ form.as_p }}
 		<tr class="form-row">
 			<td width="150px">Фамилия</td>
 			<td>
