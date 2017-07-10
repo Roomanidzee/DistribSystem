@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import User, Group
     
 class UserProfile(models.Model):
@@ -6,10 +7,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     patronymic = models.CharField(max_length = 50, verbose_name = 'Отчество')
 
-    #def user_post_save(self, sender, instance, **kwargs):
-    #    ( profile, new ) = UserProfile.objects.get_or_create(user=instance)
- 
-#models.signals.post_save.connect(UserProfile.user_post_save, sender=User)  
 
 class StudentManager(models.Manager):
 
@@ -70,4 +67,13 @@ class ScientificDirector(Group):
         verbose_name_plural = "Scientific directors"
         ordering = ['name']
         permissions = {}
-   
+
+    
+def create_profile(sender, **kwargs):
+    
+    user = kwargs["instance"]
+    if kwargs["created"]:
+        user_profile = UserProfile(user=user)
+        user_profile.save()
+post_save.connect(create_profile, sender=User)    
+
