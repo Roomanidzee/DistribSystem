@@ -64,19 +64,20 @@
 	<h1>Регистрация</h1>
 
 	<div align="center">
-	<form class="reg-form" action="index.html" method="get">
+	<form class="reg-form" action="index.html" method="post">
 	<table>
+    {% csrf_token %}
 		<tr class="form-row">
 			<td width="150px">Фамилия</td>
 			<td>
-				<input type="text" id="form_lname" name="last_name">
+				{{ form.last_name }}
 			</td>
 		</tr>
 
 		<tr class="form-row">
 			<td width="150px">Имя</td>
 			<td>
-				<input type="text" id="form_fname" name="first_name">
+				{{ form.first_name }}
 			</td>
 		</tr>
 
@@ -90,14 +91,14 @@
 		<tr class="form-row">
 			<td width="150px">E-mail</td>
 			<td>
-				<input type="email" id="email" name="email">
+				{{ form.email }}
 			</td>
 		</tr>
 
 		<tr class="form-row">
 			<td width="150px">Имя пользователя</td>
 			<td>
-				<input type="text" id="username" name="username">
+				{{ form.username }}
 			</td>
 		</tr>
 
@@ -124,7 +125,7 @@
 		<tr class="form-row">
 			<td width="150px">Пароль</td>
 			<td>
-				<input type="password" id="password" name="password">
+				{{ form.password }}
 			</td>
 		</tr>
 
@@ -135,11 +136,12 @@
 			</td>
 		</tr>
 	</table>
-	
-	</form>
-	<div class="button">
+    
+    <div class="button">
 		<input type="submit" value="Зарегистрироваться">
 	</div>
+	
+	</form>
 	</div>
 </body>
 </html>
