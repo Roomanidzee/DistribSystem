@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
 
 class UserForm(forms.ModelForm):
     
@@ -25,6 +24,7 @@ class UserForm(forms.ModelForm):
         
         return self.cleaned_data["pass2"]
     
+'''
 class UserProfileForm(forms.ModelForm):
     
     SEX_CHOICES = (('Муж.','Мужской'), ('Жен.','Женский'),)
@@ -35,3 +35,4 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['patronymic', 'sex']
+'''

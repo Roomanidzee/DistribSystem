@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -8,7 +9,7 @@ class Container(models.Model):
 
     #лаборатория 
     container_name = models.CharField(max_length = 100, verbose_name = 'Название лаборатории')
-    container_director = models.OneToOneField('userroles.UserProfile', on_delete= models.CASCADE)
+    container_director = models.OneToOneField(User, on_delete= models.CASCADE)
     container_capacity = models.IntegerField(
         default = 0,
         validators=[MaxValueValidator(300), MinValueValidator(0)]
@@ -31,7 +32,7 @@ class Container(models.Model):
 
 class Request(models.Model):
     #Запрос в "контейнер"
-    student = models.ForeignKey('userroles.UserProfile', on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     container = models.ForeignKey(Container, on_delete=models.CASCADE)
     
     '''

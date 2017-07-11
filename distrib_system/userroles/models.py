@@ -1,15 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User, Group
-    
-class UserProfile(models.Model):
-    SEX_CHOICES = (('Муж.','Мужской'), ('Жен.','Женский'),)
-    user = models.ForeignKey(User)
-    patronymic = models.CharField(max_length=50)
-    sex = models.CharField(max_length=10, choices = SEX_CHOICES)
-    containers = models.ManyToManyField('choose_distrib.Container')
-    def __str__(self):
-        return self.user.__str__()
 
 class StudentManager(models.Manager):
     def get_query_set(self):
