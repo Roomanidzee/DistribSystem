@@ -11,16 +11,17 @@ class Container(models.Model):
     container_director = models.OneToOneField('userroles.UserProfile', on_delete= models.CASCADE)
     container_capacity = models.IntegerField(
         default = 0,
-        validators=[MaxValueValidator(200), MinValueValidator(0)]
+        validators=[MaxValueValidator(300), MinValueValidator(0)]
     )
     '''
     3 - LAB
     4 - COURSE
     5 - PRACTICE
+    6 - SCIENCE_HEAD
     '''
     container_type = models.IntegerField(
         default = 3,
-        validators=[MaxValueValidator(5), MinValueValidator(3)]
+        validators=[MaxValueValidator(6), MinValueValidator(3)]
     )
     
     
