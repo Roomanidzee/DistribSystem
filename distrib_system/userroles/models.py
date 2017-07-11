@@ -1,16 +1,12 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User, Group
-from choose_distrib.models import *
     
 class UserProfile(models.Model):
-    
     user = models.OneToOneField(User)
-    containers = models.ManyToManyField(Container)
-
+    containers = models.ManyToManyField('choose_distrib.Container')
 
 class StudentManager(models.Manager):
-
     def get_query_set(self):
         return super(StudentManager, self).get_query_set().filter(student__enrolled=True).distinct()
 
@@ -25,7 +21,6 @@ class Student(Group):
         permissions = {}
    
 class CooperatorManager(models.Manager):
-
     def get_query_set(self):
         return super(CooperatorManager, self).get_query_set().filter(cooperator__enrolled=True).distinct()
 
@@ -40,7 +35,6 @@ class Cooperator(Group):
         permissions = {}
    
 class ProfessorManager(models.Manager):
-
     def get_query_set(self):
         return super(ProfessorManager, self).get_query_set().filter(professor__enrolled=True).distinct()
 
@@ -55,7 +49,6 @@ class Professor(Group):
         permissions = {}
 
 class ScientificDirectorManager(models.Manager):
-
     def get_query_set(self):
         return super(ScientificDirectorManager, self).get_query_set().filter(scientificdirector__enrolled=True).distinct()
         
@@ -71,10 +64,9 @@ class ScientificDirector(Group):
 
     
 def create_profile(sender, **kwargs):
-    
     user = kwargs["instance"]
     if kwargs["created"]:
         user_profile = UserProfile(user=user)
         user_profile.save()
-post_save.connect(create_profile, sender=User)    
 
+post_save.connect(create_profile, sender=User)
