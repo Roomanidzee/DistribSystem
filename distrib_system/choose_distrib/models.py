@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class Container(models.Model):
 
     # Абстрактный контейнер. НЕ СОЗДАВАТЬ ОБЪЕКТЫ, ТОЛЬКО НАСЛЕДНИКИ
-    container_name = models.CharField(max_length=100, verbose_name='Название лаборатории')
+    container_name = models.CharField(max_length=100, verbose_name='Название')
     container_director = models.OneToOneField(User, on_delete=models.CASCADE)
     container_capacity = models.IntegerField(
         default=0,
@@ -20,10 +20,7 @@ class Container(models.Model):
     5 - PRACTICE
     6 - SCIENCE_HEAD
     '''
-    container_type = models.IntegerField(
-        default=3,
-        validators=[MaxValueValidator(6), MinValueValidator(3)]
-    )
+    container_type = models.CharField(max_length=20, default="")
 
 
 class Laboratory(Container):
@@ -64,7 +61,15 @@ class Request(models.Model):
         default=0,
         validators=[MaxValueValidator(2), MinValueValidator(0)]
     )
-    
+
+    '''
+    LAB - для лабораторий
+    COURSE - для курсов
+    PRACTICE - для практик
+    SCIENCE_HEAD - для научруков
+    '''
+    request_type = models.CharField(max_length=20, default="")
+
     send_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateField(auto_now=True)
 
