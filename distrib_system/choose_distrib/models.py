@@ -43,4 +43,5 @@ class Request(models.Model):
         validators=[MaxValueValidator(2), MinValueValidator(0)]
     )
     
-    send_date = models.DateField(auto_now=True)
+    send_date = models.DateTimeField(auto_now_add=True)
+    change_date = models.DateField(auto_now=True)
