@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
-class Container(models.Model):   
+class StudyActivityStorage(models.Model):   
     #лаборатория 
     container_name = models.CharField(max_length = 100, verbose_name = 'Название лаборатории')
     container_director = models.OneToOneField(UserProfile, on_delete= models.CASCADE)
@@ -27,7 +27,7 @@ class Container(models.Model):
         return "Название лаборатории: {0}".format(self.lab_name)
 
 
-class Request(models.Model):
+class StudyRequest(models.Model):
     #Запрос в "контейнер"
     student = models.ForeignKey(UserProfile, on_delete= models.CASCADE)
     container = models.ForeignKey(Container, on_delete= models.CASCADE)
