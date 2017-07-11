@@ -7,6 +7,8 @@ __pycache__/
 .project
 .pydevproject
 
+.idea
+
 # C extensions
 *.so
 

@@ -9,6 +9,7 @@ from .forms import UserForm
 
 # Create your views here.
 
+
 def register(request):
     user_form = UserForm(request.POST or None)
         
@@ -22,27 +23,20 @@ def register(request):
         user.email = user_data['email']
         user.set_password(user_data['password'])
         user.save()
-        '''
-        user_profile = UserProfile(user=user)
-        user_profile_data = user_profile_form.cleaned_data
-        user_profile.patronymic = user_profile_data['patronymic']
-        user_profile.sex = user_profile_data['sex']
-        user_profile.save()
-        '''
-        user = authenticate(username = user_data['username'], password = user_data['password'])
+        user = authenticate(username=user_data['username'], password=user_data['password'])
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/my_profile/')
     context = {
         "form": user_form,
-        #"profile_form": user_profile_form
     }
         
     return render(request, 'register.html', context)
-    
+
+
 @login_required
 def my_profile(request):
     
     """Профиль текущего пользователя"""
     user = request.user
-    return render_to_response( "accounts/card.html", { "user": user }, context_instance = RequestContext( request ) )    
+    return render_to_response("accounts/card.html", {"user": user}, context_instance=RequestContext(request))

@@ -7,11 +7,11 @@ from django.contrib.auth.models import User
 
 class Container(models.Model):
 
-    #лаборатория 
-    container_name = models.CharField(max_length = 100, verbose_name = 'Название лаборатории')
-    container_director = models.OneToOneField(User, on_delete= models.CASCADE)
+    # Абстрактный контейнер. НЕ СОЗДАВАТЬ ОБЪЕКТЫ, ТОЛЬКО НАСЛЕДНИКИ
+    container_name = models.CharField(max_length=100, verbose_name='Название')
+    container_director = models.OneToOneField(User, on_delete=models.CASCADE)
     container_capacity = models.IntegerField(
-        default = 0,
+        default=0,
         validators=[MaxValueValidator(300), MinValueValidator(0)]
     )
     '''
@@ -20,18 +20,35 @@ class Container(models.Model):
     5 - PRACTICE
     6 - SCIENCE_HEAD
     '''
-    container_type = models.IntegerField(
-        default = 3,
-        validators=[MaxValueValidator(6), MinValueValidator(3)]
-    )
-    
-    
+    container_type = models.CharField(max_length=20, default="")
+
+
+class Laboratory(Container):
+
     def __str__(self):
-        return "Название лаборатории: {0}".format(self.lab_name)
+        return "Название лаборатории: {0}".format(self.container_name)
+
+
+class Course(Container):
+
+    def __str__(self):
+        return "Название курса: {0}".format(self.container_name)
+
+
+class Practice(Container):
+
+    def __str__(self):
+        return "Название практики: {0}".format(self.container_name)
+
+
+class ScienceHead(Container):
+
+    def __str__(self):
+        return "Научный руководитель: {0}".format(self.container_name)
 
 
 class Request(models.Model):
-    #Запрос в "контейнер"
+    # Запрос в "контейнер"
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     container = models.ForeignKey(Container, on_delete=models.CASCADE)
     
@@ -41,9 +58,22 @@ class Request(models.Model):
     2 = DECLINED 
     '''
     status = models.IntegerField(
-        default = 0,
+        default=0,
         validators=[MaxValueValidator(2), MinValueValidator(0)]
     )
-    
+
+    '''
+    LAB - для лабораторий
+    COURSE - для курсов
+    PRACTICE - для практик
+    SCIENCE_HEAD - для научруков
+    '''
+    request_type = models.CharField(max_length=20, default="")
+
     send_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateField(auto_now=True)
+
+
+class StudentToLabStorage(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    container = models.ForeignKey(Container, on_delete=models.CASCADE)
