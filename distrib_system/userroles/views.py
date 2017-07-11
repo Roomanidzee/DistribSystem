@@ -11,12 +11,10 @@ from .forms import UserForm
 
 def register(request):
     user_form = UserForm(request.POST or None)
-    #user_profile_form = UserProfileForm(request.POST or None)
         
-    if user_form.is_valid() and user_profile_form.is_valid():
+    if user_form.is_valid():
         
         user = user_form.save(commit=False)
-        user_profile_save = user_profile_form.save(commit=False)
         user_data = user_form.cleaned_data
         user.username = user_data['username']
         user.last_name = user_data['last_name']
