@@ -3,54 +3,7 @@
 <head>
 	<title>DistribSystem</title>
 	<meta charset="utf-8">
-	<style type="text/css">
-		header {
-		width: 100%;
-		background-size: 100%
-		background-color:#ffffff;
-		}
-
-		body {
-			background-color: #ffffff;
-			font-family: 'Bree Serif', serif;
-		}
-
-		h1 {
-			text-align: center;
-			color: #012a77;
-		}
-
-		.button input{
-			
-			height: 40px;
-			width: 400px;
-			line-height: 10px;
-			background: #012a77;
-			color: white;
-			border-bottom-right-radius: 15px;
-			border-bottom-left-radius: 15px;
-			text-transform: uppercase;
-		}
-
-		.form-row input {
-			float: center;
-			height: 18px;
-			line-height: 10px;
-			padding: 10px;
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			box-sizing: border-box;
-			border-radius: 10px;
-		}
-
-		.reg-form{
-			width: 400px;
-			height: 356px;
-			background-color: #e3e3e3;
-			border-top-right-radius: 15px;
-			border-top-left-radius: 15px;
-		}
-	</style>
+	<link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 	<header>
@@ -104,10 +57,7 @@
 		<tr class="form-row">
 		<td width="150px">Пол</td>
 		<td>
-			<input type="radio" id="form_sex" name="sex" value="m">
-			муж.
-			<input type="radio" id="form_sex" name="sex" value="w">
-			жен.
+			{{ profile_form.sex }}
 		</td>
 		</tr>
 
