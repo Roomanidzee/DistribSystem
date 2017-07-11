@@ -27,8 +27,11 @@ class UserForm(forms.ModelForm):
     
 class UserProfileForm(forms.ModelForm):
     
-    patronymic = forms.CharField(max_length = 50, required = True, label = "Отчество")         
+    SEX_CHOICES = (('Муж.','Мужской'), ('Жен.','Женский'),)
+    
+    patronymic = forms.CharField(max_length = 50, required = True, label = "Отчество")
+    sex = forms.ChoiceField(choices = SEX_CHOICES)
     
     class Meta:
         model = UserProfile
-        fields = ['patronymic']
+        fields = ['patronymic', 'sex']
