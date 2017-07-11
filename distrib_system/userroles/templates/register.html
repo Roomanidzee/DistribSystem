@@ -55,8 +55,7 @@
 <body>
 	<header>
 		<div align="center">
-			<!--<img src="http://kpfu.ru/portal/docs/F1440851335/orEy9xA1kGo.jpg" width="40%">-->
-			<img src="\Users\Asus\Desktop\Проект\fv5xn_croper_ru.jpeg" width="40%">
+			<img src="/static/img/logo.jpeg" width="40%">
 		</div>
 	</header>
 
@@ -64,10 +63,9 @@
 	<h1>Регистрация</h1>
 
 	<div align="center">
-	<form class="reg-form" action="index.html" method="post">
+	<form class="reg-form" action="" method="post">
 	<table>
     {% csrf_token %}
-    {{ form.as_p }}
 		<tr class="form-row">
 			<td width="150px">Фамилия</td>
 			<td>
@@ -85,7 +83,7 @@
 		<tr class="form-row">
 			<td width="150px">Отчество</td>
 			<td>
-				<input type="text" id="form_mname" name="middle_name">
+				{{ profile_form.patronymic }}
 			</td>
 		</tr>
 
@@ -133,7 +131,7 @@
 		<tr class="form-row">
 			<td width="150px">Повтор пароля</td>
 			<td>
-				<input type="password" id="password" name="repeat-password">
+                {{ form.pass2 }}
 			</td>
 		</tr>
 	</table>
