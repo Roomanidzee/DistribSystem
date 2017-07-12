@@ -14,29 +14,21 @@ from .utils import get_entity_from_db
 
 
 def register(request):
-    user_form = UserForm(request.POST or None)
-        
-    if user_form.is_valid():
-        
-        user = user_form.save(commit=False)
-        user_data = user_form.cleaned_data
-        user.username = user_data['username']
-        user.last_name = user_data['last_name']
-        user.first_name = user_data['first_name']
-        user.email = user_data['email']
-        user.set_password(user_data['password'])
+    
+    if request.method == "POST":
+        user = User(username=request.POST['username'])
+        user.set_password(request.POST['password'])
+        user.first_name=request.POST['first_name']
+        user.last_name=request.POST['last_name']
+        user.email=request.POST['email']
         user.save()
-        positions = user_data['position']
+        positions = request.POST.getlist('position')
         utils.initialize_user(user, positions)
-        user = authenticate(username=user_data['username'], password=user_data['password'])
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/my_profile/'+str(user.id))
-    context = {
-        "form": user_form,
-    }
-        
-    return render(request, 'register.html', context)
+            return HttpResponseRedirect('/accounts/my_profile/'+str(user.id))
+    return render(request, 'register.html')
 
 
 def new_login(request):
