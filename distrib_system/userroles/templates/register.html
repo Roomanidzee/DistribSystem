@@ -1,96 +1,77 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>DistribSystem</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-	<header>
-		<div align="center">
-			<img src="/static/img/logo.jpeg" width="40%">
-		</div>
-	</header>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Регистрация</title>
 
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
 
-	<h1>Регистрация</h1>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../static/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="form-main-padding">
+      <header align="center">
+        <img class="form-signin-heading" src="../static/img/login_logo.jpeg" width="27%">
+      </header>
+      <div class="container">
+        
+        <form class="form-signin">
 
-	<div align="center">
-	<form class="reg-form" action="" method="post">
-	<table>
-    {% csrf_token %}
-		<tr class="form-row">
-			<td width="150px">Фамилия</td>
-			<td>
-				{{ form.last_name }}
-			</td>
-		</tr>
+          <label for="inputLastname" class="sr-only">Фамилия</label>
+          <input type="text" id="inputLastname" class="form-control" placeholder="Фамилия" required autofocus>
 
-		<tr class="form-row">
-			<td width="150px">Имя</td>
-			<td>
-				{{ form.first_name }}
-			</td>
-		</tr>
+          <label for="inputFirstname" class="sr-only">Имя</label>
+          <input type="text" id="inputFirstname" class="form-control" placeholder="Имя" required autofocus>
 
-		<tr class="form-row">
-			<td width="150px">Отчество</td>
-			<td>
-				{{ profile_form.patronymic }}
-			</td>
-		</tr>
+          <label for="inputUsername" class="sr-only">Имя пользователя</label>
+          <input type="text" id="inputUsername" class="form-control" placeholder="Имя пользователя" required autofocus>
 
-		<tr class="form-row">
-			<td width="150px">E-mail</td>
-			<td>
-				{{ form.email }}
-			</td>
-		</tr>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+      
+          <div class="checkbox">
+            <p><big>Должность:</big></p>
+            <p>
+              <label>
+                <input type="checkbox">Студент
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox">Преподаватель
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox">Сотрудник
+              </label>
+            </p>
+            <p>
+              <label>
+                <input type="checkbox">Научный рукводитель
+              </label>
+            </p>
+          </div>
 
-		<tr class="form-row">
-			<td width="150px">Имя пользователя</td>
-			<td>
-				{{ form.username }}
-			</td>
-		</tr>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required autofocus>
 
-		<tr class="form-row">
-		<td width="150px">Пол</td>
-		<td>
-			{{ profile_form.sex }}
-		</td>
-		</tr>
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Повторите пароль" required  autofocus>
 
-		<tr class="form-row">
-			<td width="50px">Должность</td><br>
-			<td>
-				<input type="checkbox" id="position" name="position" value="student">Студент<br/>
-				<input type="checkbox" id="position" name="position" value="professor">Преподаватель<br/>	
-				<input type="checkbox" id="position" name="position" value="co-worker">Сотрудник<br/>
-				<input type="checkbox" id="position" name="position" value="scientific_director">Научный руководитель<br/>
-			</td>
-		</tr>
+          <button class="btn btn-lg btn-primary btn-block button-margin" type="submit">Зарегистрироваться</button>
 
-		<tr class="form-row">
-			<td width="150px">Пароль</td>
-			<td>
-				{{ form.password }}
-			</td>
-		</tr>
-
-		<tr class="form-row">
-			<td width="150px">Повтор пароля</td>
-			<td>
-                {{ form.pass2 }}
-			</td>
-		</tr>
-	</table>
-    
-    <div class="button">
-		<input type="submit" value="Зарегистрироваться">
-	</div>
-	
-	</form>
-	</div>
-</body>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
