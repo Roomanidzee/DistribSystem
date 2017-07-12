@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from .models import Student, Cooperator, Professor, ScientificDirector
+from django.http import Http404
 
 from .forms import UserForm
 from . import utils
@@ -37,31 +37,59 @@ def register(request):
     }
         
     return render(request, 'register.html', context)
+
+
+def new_login(request):
     
-@login_required
+    username = request.POST['login']
+    password = request.POST['password']
+    
+    user = authenticate(username=username, password=password)
+    
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponseRedirect('/my_profile/'+str(user.id))
+        else:
+            
+            raise Http404
+    
+    else:            
+            raise Http404
+        
+def new_logout(request):
+    
+    logout(request)
+    return HttpResponseRedirect('/login/')
+                
+
+
+@login_required(login_url = '/accounts/login')
 def my_profile(request, user_id):
-    
+
     """Профиль текущего пользователя"""
     user = request.user
-    
+
     entity = get_entity_from_db(user)
-    
+
     context = {
-        
+
         "user": entity,
-        "user_id": entity.id,
-        "user_surname": entity.surname,
-        "user_name": entity.name,
-        "user_email": entity.email,
+        "user_id": user.id,
+        "user_surname": user.surname,
+        "user_name": user.name,
+        "user_email": user.email,
         
     }
     
     return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
 
-@login_required()
+
+@login_required(login_url = '/accounts/login')
 def edit_profile(request, user_id):    
     pass
-    
-@login_required()
+
+
+@login_required(login_url = '/accounts/login')
 def edit_password(request, user_id):    
-    pass    
+    pass
