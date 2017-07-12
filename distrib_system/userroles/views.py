@@ -27,7 +27,7 @@ def register(request):
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/accounts/my_profile/'+str(user.id))
+            return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
     return render(request, 'register.html')
 
 
@@ -41,7 +41,7 @@ def new_login(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            return HttpResponseRedirect('/my_profile/'+str(user.id))
+            return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
         else:
             
             raise Http404
