@@ -4,8 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from .models import Student, Cooperator, Professor, ScientificDirector
 
 from .forms import UserForm
+from . import utils
+from .utils import get_entity_from_db
 
 # Create your views here.
 
@@ -23,10 +26,12 @@ def register(request):
         user.email = user_data['email']
         user.set_password(user_data['password'])
         user.save()
+        positions = user_data['position']
+        utils.initialize_user(user, positions)
         user = authenticate(username=user_data['username'], password=user_data['password'])
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/my_profile/')
+            return HttpResponseRedirect('/my_profile/'+str(user.id))
     context = {
         "form": user_form,
     }
@@ -35,8 +40,31 @@ def register(request):
 
 
 @login_required
-def my_profile(request):
-    
+def my_profile(request, user_id):
+
     """Профиль текущего пользователя"""
     user = request.user
-    return render_to_response("accounts/card.html", {"user": user}, context_instance=RequestContext(request))
+
+    entity = get_entity_from_db(user)
+
+    context = {
+
+        "user": entity,
+        "user_id": user.id,
+        "user_surname": user.surname,
+        "user_name": user.name,
+        "user_email": user.email,
+        
+    }
+    
+    return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
+
+
+@login_required()
+def edit_profile(request, user_id):    
+    pass
+
+
+@login_required()
+def edit_password(request, user_id):    
+    pass
