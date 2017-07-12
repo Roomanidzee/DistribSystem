@@ -52,7 +52,7 @@ def new_login(request):
 def new_logout(request):
     
     logout(request)
-    return HttpResponseRedirect('/login/')
+    return HttpResponseRedirect('/accounts/login/')
                 
 
 
