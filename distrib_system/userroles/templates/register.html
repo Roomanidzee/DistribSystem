@@ -34,11 +34,9 @@
 
           <label for="inputUsername" class="sr-only">Имя пользователя</label>
           <input type="text" id="inputUsername" class="form-control" placeholder="Имя пользователя" required autofocus>-->
-          {{ form.username }}
 
           <label for="inputEmail" class="sr-only">Email address</label>
           <input type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-          {{ form.email }}
       
           <div class="checkbox">
             <p><big>Должность:</big></p>
@@ -48,7 +46,6 @@
                 
                 Студент
                 
-                {{form.position}}
               </label>
             </p>
             <p>
@@ -56,8 +53,7 @@
                 <!--<input type="checkbox">-->
                 
                 Преподаватель
-                
-                {{form.position}}
+            
               </label>
             </p>
             <p>
@@ -65,8 +61,6 @@
                 <!--<input type="checkbox">-->
                 
                 Сотрудник
-                
-                {{form.position}}
               </label>
             </p>
             <p>
@@ -78,12 +72,9 @@
 
           <label for="inputPassword" class="sr-only">Password</label>
           <!--<input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required autofocus>-->
-          {{ form.password }}
-
 
           <label for="inputPassword" class="sr-only">Password</label>
           <!--<input type="password" id="inputPassword" class="form-control" placeholder="Повторите пароль" required  autofocus>-->
-          {{ form.pass2 }}
 
           <button class="btn btn-lg btn-primary btn-block button-margin" type="submit">Зарегистрироваться</button>
 
