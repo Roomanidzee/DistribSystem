@@ -4,9 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from .models import Student, Cooperator, Professor, ScientificDirector
 
-from .forms import UserForm
 from . import utils
 from .utils import get_entity_from_db
 
@@ -14,57 +13,24 @@ from .utils import get_entity_from_db
 
 
 def register(request):
-    user_form = UserForm(request.POST or None)
-        
-    if user_form.is_valid():
-        
-        user = user_form.save(commit=False)
-        user_data = user_form.cleaned_data
-        user.username = user_data['username']
-        user.last_name = user_data['last_name']
-        user.first_name = user_data['first_name']
-        user.email = user_data['email']
-        user.set_password(user_data['password'])
+
+    if request.method == "POST":
+        user = User(username=request.POST['username'])
+        user.set_password(request.POST['password'])
+        user.first_name=request.POST['first_name']
+        user.last_name=request.POST['last_name']
+        user.email=request.POST['email']
         user.save()
-        positions = user_data['position']
+        positions = request.POST.getlist('position')
         utils.initialize_user(user, positions)
-        user = authenticate(username=user_data['username'], password=user_data['password'])
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
             return HttpResponseRedirect('/my_profile/'+str(user.id))
-    context = {
-        "form": user_form,
-    }
-        
-    return render(request, 'register.html', context)
+    return render(request, 'register.html')
 
 
-def new_login(request):
-    
-    username = request.POST['login']
-    password = request.POST['password']
-    
-    user = authenticate(username=username, password=password)
-    
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return HttpResponseRedirect('/my_profile/'+str(user.id))
-        else:
-            
-            raise Http404
-    
-    else:            
-            raise Http404
-        
-def new_logout(request):
-    
-    logout(request)
-    return HttpResponseRedirect('/login/')
-                
-
-
-@login_required(login_url = '/accounts/login')
+@login_required
 def my_profile(request, user_id):
 
     """Профиль текущего пользователя"""
@@ -84,11 +50,11 @@ def my_profile(request, user_id):
     return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
 
 
-@login_required(login_url = '/accounts/login')
+@login_required()
 def edit_profile(request, user_id):    
     pass
 
 
-@login_required(login_url = '/accounts/login')
+@login_required()
 def edit_password(request, user_id):    
     pass
