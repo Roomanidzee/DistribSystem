@@ -33,8 +33,8 @@ def register(request):
 
 def new_login(request):
     
-    username = request.POST['login']
-    password = request.POST['password']
+    username = request.POST.get('login')
+    password = request.POST.get('password')
     
     user = authenticate(username=username, password=password)
     
