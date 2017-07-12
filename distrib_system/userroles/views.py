@@ -35,8 +35,16 @@ def register(request):
 
 
 @login_required
-def my_profile(request):
+def my_profile(request, user_id):
     
     """Профиль текущего пользователя"""
     user = request.user
-    return render_to_response("accounts/card.html", {"user": user}, context_instance=RequestContext(request))
+    return render_to_response("accounts/my_profile.html", {"user": user, "user_id": user.id}, context_instance=RequestContext(request))
+
+@login_required()
+def edit_profile(request, user_id):    
+    pass
+    
+@login_required()
+def edit_password(request, user_id):    
+    pass    
