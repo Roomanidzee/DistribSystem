@@ -37,31 +37,34 @@ def register(request):
     }
         
     return render(request, 'register.html', context)
-    
+
+
 @login_required
 def my_profile(request, user_id):
-    
+
     """Профиль текущего пользователя"""
     user = request.user
-    
+
     entity = get_entity_from_db(user)
-    
+
     context = {
-        
+
         "user": entity,
-        "user_id": entity.id,
-        "user_surname": entity.surname,
-        "user_name": entity.name,
-        "user_email": entity.email,
+        "user_id": user.id,
+        "user_surname": user.surname,
+        "user_name": user.name,
+        "user_email": user.email,
         
     }
     
     return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
 
+
 @login_required()
 def edit_profile(request, user_id):    
     pass
-    
+
+
 @login_required()
 def edit_password(request, user_id):    
-    pass    
+    pass
