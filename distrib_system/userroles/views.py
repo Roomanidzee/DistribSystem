@@ -6,17 +6,17 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from .forms import UserForm
+from .utils import get_entity_from_db
 
 # Create your views here.
 
+
 def register(request):
     user_form = UserForm(request.POST or None)
-    #user_profile_form = UserProfileForm(request.POST or None)
         
-    if user_form.is_valid() and user_profile_form.is_valid():
+    if user_form.is_valid():
         
         user = user_form.save(commit=False)
-        user_profile_save = user_profile_form.save(commit=False)
         user_data = user_form.cleaned_data
         user.username = user_data['username']
         user.last_name = user_data['last_name']
@@ -24,27 +24,45 @@ def register(request):
         user.email = user_data['email']
         user.set_password(user_data['password'])
         user.save()
-        '''
-        user_profile = UserProfile(user=user)
-        user_profile_data = user_profile_form.cleaned_data
-        user_profile.patronymic = user_profile_data['patronymic']
-        user_profile.sex = user_profile_data['sex']
-        user_profile.save()
-        '''
-        user = authenticate(username = user_data['username'], password = user_data['password'])
+        user = authenticate(username=user_data['username'], password=user_data['password'])
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/my_profile/')
+            return HttpResponseRedirect('/my_profile/' + str(user.id))
+    
     context = {
+        
         "form": user_form,
-        #"profile_form": user_profile_form
+        
     }
         
     return render(request, 'register.html', context)
-    
+
+
 @login_required
-def my_profile(request):
+def my_profile(request, user_id):
     
     """Профиль текущего пользователя"""
     user = request.user
-    return render_to_response( "accounts/card.html", { "user": user }, context_instance = RequestContext( request ) )    
+    entity = get_entity_from_db(user)
+
+    context = {
+        
+        "user": entity,  # Выводится лист. Стандартый list to string. Неплохо бы обработать
+        "user_id": user.id,
+        "user_surname": user.surname,
+        "user_name": user.name,
+        "user_email": user.email,
+        
+    }
+    
+    return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
+
+
+@login_required()
+def edit_profile(request, user_id):    
+    pass
+
+
+@login_required()
+def edit_password(request, user_id):    
+    pass    
