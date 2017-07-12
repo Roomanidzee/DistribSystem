@@ -74,7 +74,6 @@ def my_profile(request, user_id):
 
     context = {
 
-        "user": entity,
         "user_id": user.id,
         "user_surname": user.surname,
         "user_name": user.name,
