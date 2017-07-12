@@ -6,7 +6,6 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from .forms import UserForm
 from . import utils
 from .utils import get_entity_from_db
 
@@ -33,21 +32,25 @@ def register(request):
 
 def new_login(request):
     
-    username = request.POST.get('login')
-    password = request.POST.get('password')
+    if request.POST:
+        
+        username = request.POST.get('login')
+        password = request.POST.get('password')
+       
+        user = authenticate(username=username, password=password)
     
-    user = authenticate(username=username, password=password)
-    
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
-        else:
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
+            else:
             
-            raise Http404
+                raise Http404
     
-    else:            
-            raise Http404
+        else:            
+                raise Http404
+    
+    return render(request, 'login.html')
         
 def new_logout(request):
     
