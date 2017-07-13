@@ -118,45 +118,45 @@ def sci_dir(request, user_id):
 def practice_form_request(request, user_id, practice_id):
     chosen_practice = practice_id
     user = user_id
-    request = Request()
+    request = models.Request()
     request.student = user
     request.container = chosen_practice
-    requset.status = 0
-    requset.request_type = 'PRACTICE'
-    requset.save()
+    request.status = 0
+    request.request_type = 'PRACTICE'
+    request.save()
     
 
 def course_form_request(request, user_id, course_id):
     chosen_practice = course_id
     user = user_id
-    request = Request()
+    request = models.Request()
     request.student = user
     request.container = chosen_practice
-    requset.status = 0
-    requset.request_type = 'COURSE'
-    requset.save()
+    request.status = 0
+    request.request_type = 'COURSE'
+    request.save()
     
 
 def lab_request(request, user_id, lab_id):
     chosen_practice = lab_id
     user = user_id
-    request = Request()
+    request = models.Request()
     request.student = user
     request.container = chosen_practice
-    requset.status = 0
-    requset.request_type = 'LAB'
-    requset.save()
+    request.status = 0
+    request.request_type = 'LAB'
+    request.save()
 
 
-def sci_dir_request(request, user_id,sci_dir_id):
-    chosen_practice = practice_id
+def sci_dir_request(request, user_id, sci_dir_id):
+    chosen_practice = sci_dir_id
     user = user_id
-    request = Request()
+    request = models.Request()
     request.student = user
     request.container = chosen_practice
-    requset.status = 0
-    requset.request_type = 'SCIENCE_HEAD'
-    requset.save()
+    request.status = 0
+    request.request_type = 'SCIENCE_HEAD'
+    request.save()
 
 
 def accept(request, user_id1, user_id2):
