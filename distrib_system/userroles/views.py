@@ -54,7 +54,6 @@ def new_logout(request):
     return HttpResponseRedirect('/accounts/login/')
                 
 
-
 @login_required(login_url = '/accounts/login')
 def my_profile(request, user_id):
 
