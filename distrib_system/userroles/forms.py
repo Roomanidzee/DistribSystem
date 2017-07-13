@@ -16,8 +16,7 @@ class UserForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput, label="Электронная почта")
     password = forms.CharField(widget=forms.PasswordInput, label="Пароль")
     pass2 = forms.CharField(widget=forms.PasswordInput, label="Повторите пароль")
-    
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'first_name', 'last_name']
-        

@@ -15,13 +15,13 @@ def get_entity_from_db(user):
     groups = list(user.groups.all())
     for group in groups:
         if group.name == 'student':
-            result.append(Student.objects.get(user = user))
+            result.append(Student.objects.get(user=user))
         if group.name == 'professor':
-            result.append(Professor.objects.get(user = user))
+            result.append(Professor.objects.get(user=user))
         if group.name == 'cooperator':
-            result.append(Cooperator.objects.get(user = user))
+            result.append(Cooperator.objects.get(user=user))
         if group.name == 'scientific_director':
-            result.append(ScientificDirector.objects.get(user = user))
+            result.append(ScientificDirector.objects.get(user=user))
     return result
 
 
