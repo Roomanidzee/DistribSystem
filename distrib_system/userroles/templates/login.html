@@ -17,13 +17,14 @@
     <script src="{% static "userroles/js/bootstrap.min.js" %}"></script>
   </head>
   <body>
-    <div class="container form-main-padding" method="post">
-      <form class="form-signin">
+    <div class="container form-main-padding">
+      <form class="form-signin" method="post" action="/accounts/login/">
+        {% csrf_token %}
         <img class="form-signin-heading" src="{% static "userroles/img/login_logo.jpeg" %}" width="95%">
         <label for="inputLogin" class="sr-only">Логин</label>
-        <input type="login" id="inputLogin" class="form-control" placeholder="Логин" required autofocus>
+        <input type="login" id="inputLogin" class="form-control" placeholder="Логин" required autofocus name="login">
         <label for="inputPassword" class="sr-only">Пароль</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required name="password">
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Запомнить меня
