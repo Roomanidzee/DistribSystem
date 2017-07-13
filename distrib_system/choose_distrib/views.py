@@ -2,9 +2,15 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from . import models
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
+from django.template.context_processors import request
 
 # Create your views here.
-
+'''
+    Короче, сюда лезть только готовыми к дикой боли и дебаггингу))
+'''
+'''
+STUDENTS HERE
+'''
 def student_practice_form(request, user_id):
     
     user = request.user
@@ -115,7 +121,7 @@ def student_sci_dir(request, user_id):
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/sci_dir", context, context_instance=RequestContext(request))    
 
-def practice_form_request(request, user_id, practice_id):
+def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
     user = user_id
     request = models.Request()
@@ -126,7 +132,7 @@ def practice_form_request(request, user_id, practice_id):
     request.save()
     
 
-def course_form_request(request, user_id, course_id):
+def student_course_make_request(request, user_id, course_id):
     chosen_practice = course_id
     user = user_id
     request = models.Request()
@@ -137,7 +143,7 @@ def course_form_request(request, user_id, course_id):
     request.save()
     
 
-def lab_request(request, user_id, lab_id):
+def student_lab_make_request(request, user_id, lab_id):
     chosen_practice = lab_id
     user = user_id
     request = models.Request()
@@ -148,7 +154,7 @@ def lab_request(request, user_id, lab_id):
     request.save()
 
 
-def sci_dir_request(request, user_id, sci_dir_id):
+def student_sci_dir_make_request(request, user_id, sci_dir_id):
     chosen_practice = sci_dir_id
     user = user_id
     request = models.Request()
@@ -159,14 +165,97 @@ def sci_dir_request(request, user_id, sci_dir_id):
     request.save()
 
 
-def accept(request, user_id1, user_id2):
-    
+'''
+PROFESSORS HERE
+'''
+
+def professor_practice_form(request, user_id):
     pass
 
-def decline(request, uset_id1, user_id2):
-    
+
+def professor_choice_course_form(request, user_id):
     pass
 
-def print_version(request, user_id):
-    
+
+def professor_lab_form(request, user_id):
     pass
+
+
+def professor_practice_accept(request, user_id1, user_id2):
+    pass
+
+
+def professor_course_accept(request, user_id1, user_id2):
+    pass
+
+
+def professor_lab_accept(request, user_id1, user_id2):
+    pass
+
+
+def professor_practice_decline(request, user_id1, user_id2):
+    pass
+
+
+def professor_course_decline(request, user_id1, user_id2):
+    pass
+
+
+def professor_lab_decline(request, user_id1, user_id2):
+    pass
+
+'''
+SCIENCE DIR HERE
+'''
+
+
+def sci_dir_form(request, user_id):
+    pass
+
+
+def sci_dir_accept(request, user_id1, user_id2):
+    pass
+
+
+def sci_dir_decline(request, user_id1, user_id2):
+    pass
+
+
+'''
+COOPERATORS HERE
+'''
+
+
+def coop_practice_form(request, user_id):
+    pass
+
+
+def coop_course_form(request, user_id):
+    pass
+
+
+def coop_lab_form(request, user_id):
+    pass
+
+
+def coop_sci_dir_form(request, user_id):
+    pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
