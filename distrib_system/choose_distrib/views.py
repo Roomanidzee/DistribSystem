@@ -5,7 +5,7 @@ from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, ge
 
 # Create your views here.
 
-def practice_form(request, user_id):
+def student_practice_form(request, user_id):
     
     user = request.user
     
@@ -32,7 +32,7 @@ def practice_form(request, user_id):
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))    
 
-def course_form(request, user_id):
+def student_course_form(request, user_id):
     
     user = request.user
     
@@ -61,7 +61,7 @@ def course_form(request, user_id):
     
     
 
-def lab(request, user_id):
+def student_lab(request, user_id):
     
     user = request.user
     
@@ -88,7 +88,7 @@ def lab(request, user_id):
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/lab", context, context_instance=RequestContext(request))    
 
-def sci_dir(request, user_id):
+def student_sci_dir(request, user_id):
     
     user = request.user
     
