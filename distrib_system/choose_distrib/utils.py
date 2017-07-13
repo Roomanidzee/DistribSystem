@@ -10,7 +10,7 @@ from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHe
 #Автор следующих четырех функци1: Андрей
 def get_practice_from_db(user):
     
-    student = StudentToLabStorage.objects.get(pk = user)
+    student = StudentToLabStorage.objects.get(student = user)
     
     practices = Practice.objects.all()
     
@@ -26,7 +26,7 @@ def get_practice_from_db(user):
 
 def get_course_from_db(user):
     
-    student = StudentToLabStorage.objects.get(pk = user)
+    student = StudentToLabStorage.objects.get(student = user)
     
     courses = Course.objects.all()
     
@@ -42,7 +42,7 @@ def get_course_from_db(user):
 
 def get_lab_from_db(user):
     
-    student = StudentToLabStorage.objects.get(pk = user) 
+    student = StudentToLabStorage.objects.get(student = user) 
     
     labs = Laboratory.objects.all() 
     
@@ -58,7 +58,7 @@ def get_lab_from_db(user):
 
 def get_scidir_from_db(user):
     
-    student = StudentToLabStorage.objects.get(pk = user)
+    student = StudentToLabStorage.objects.get(student = user)
     
     sci_dirs = ScienceHead.objects.all()
     
