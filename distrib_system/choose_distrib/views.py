@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from . import models
+from .models import Request
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
+
 from django.template.context_processors import request
 
 # Create your views here.
