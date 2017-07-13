@@ -32,25 +32,20 @@ def register(request):
 def new_login(request):
     
     if request.POST:
-        
         username = request.POST.get('login')
         password = request.POST.get('password')
-       
         user = authenticate(username=username, password=password)
-    
+        print(user)
         if user is not None:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
             else:
-            
                 raise Http404
     
         else:            
-                raise Http404
-    
+            return render(request, 'login.html')
     else:
-    
         return render(request, 'login.html')
         
 def new_logout(request):
@@ -65,26 +60,15 @@ def my_profile(request, user_id):
 
     """Профиль текущего пользователя"""
     user = request.user
-
-    entity = get_entity_from_db(user)
-    
-    new_user = None
-    
-    for entities_item in entity:
-        
-        new_user = entities_item
-        
     
     context = {
-
-        "user_id": new_user.id,
-        "user_surname": new_user.last_name,
-        "user_name": new_user.first_name,
-        "user_email": new_user.email,
-        
+        "user_id": user.id,
+        "user_surname": user.last_name,
+        "user_name": user.first_name,
+        "user_email": user.email,
     }
     
-    return render_to_response("accounts/my_profile/" + str(user.id), context, context_instance=RequestContext(request))
+    return render(request, "accounts/my_profile.html", context)
 
 
 @login_required(login_url = '/accounts/login')
