@@ -10,18 +10,25 @@ from django.contrib.auth.models import Group, User
 from .models import Student, Cooperator, Professor, ScientificDirector
 
 
+# Возвращает ассоц. массив
 def get_entity_from_db(user):
-    result = []
+    result = {
+        "std": None,
+        "prof": None,
+        "coop": None,
+        "scdir": None
+    }
     groups = list(user.groups.all())
     for group in groups:
+        # Если к юзер студент, то по ключу std выдаст ту самую сущность студента
         if group.name == 'student':
-            result.append(Student.objects.get(user = user))
+            result["std"] = Student.objects.get(user = user)
         if group.name == 'professor':
-            result.append(Professor.objects.get(user = user))
+            result["prof"] = Professor.objects.get(user = user)
         if group.name == 'cooperator':
-            result.append(Cooperator.objects.get(user = user))
+            result["coop"] = Cooperator.objects.get(user = user)
         if group.name == 'scientific_director':
-            result.append(ScientificDirector.objects.get(user = user))
+            result["scdir"] = ScientificDirector.objects.get(user = user)
     return result
 
 
