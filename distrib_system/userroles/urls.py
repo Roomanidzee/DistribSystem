@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.contrib.auth import views as djangoviews
 from . import views
 
 app_name = 'userroles'
