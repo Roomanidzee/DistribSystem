@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from .models import Request
+from .models import Request, Container
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
 
 from django.template.context_processors import request
@@ -19,7 +19,7 @@ def student_practice_form(request, user_id):
     
     practices_for_student = get_practice_from_db(user)
     
-    context = {}
+    practice_dict = {}
     
     i = 0
     
@@ -36,7 +36,13 @@ def student_practice_form(request, user_id):
         
         i += 1
         
-        context['practice' + str(i)] = practice
+        practice_dict['practice' + str(i)] = practice
+        
+    context = {
+        
+       'practice_table' : practice_dict    
+        
+    }    
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))    
 
@@ -126,7 +132,7 @@ def student_sci_dir(request, user_id):
 def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
     user = user_id
-    request = models.Request()
+    request = Request()
     request.student = user
     request.container = chosen_practice
     request.status = 0
@@ -137,7 +143,7 @@ def student_practice_make_request(request, user_id, practice_id):
 def student_course_make_request(request, user_id, course_id):
     chosen_practice = course_id
     user = user_id
-    request = models.Request()
+    request = Request()
     request.student = user
     request.container = chosen_practice
     request.status = 0
@@ -148,7 +154,7 @@ def student_course_make_request(request, user_id, course_id):
 def student_lab_make_request(request, user_id, lab_id):
     chosen_practice = lab_id
     user = user_id
-    request = models.Request()
+    request = Request()
     request.student = user
     request.container = chosen_practice
     request.status = 0
@@ -159,7 +165,7 @@ def student_lab_make_request(request, user_id, lab_id):
 def student_sci_dir_make_request(request, user_id, sci_dir_id):
     chosen_practice = sci_dir_id
     user = user_id
-    request = models.Request()
+    request = Request()
     request.student = user
     request.container = chosen_practice
     request.status = 0
