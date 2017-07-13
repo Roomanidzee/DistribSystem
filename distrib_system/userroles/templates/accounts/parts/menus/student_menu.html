@@ -1,9 +1,9 @@
 <div>
   <h5>Студенту</h5>
   <ul class="nav nav-pills nav-stacked">
-    <li><a href="#section2">Практика</a></li>
-    <li><a href="#section3">Курс по выбору</a></li>
-    <li><a href="#section3">Научный руководитель</a></li>
-    <li><a href="#section3">Лаборатория</a></li>
+    <li><a href="{% url 'choose_distrib:student_practice' user_id %}">Практика</a></li>
+    <li><a href="{% url 'choose_distrib:student_choice_course' user_id %}">Курс по выбору</a></li>
+    <li><a href="{% url 'choose_distrib:student_sci_dir' user_id %}">Научный руководитель</a></li>
+    <li><a href="{% url 'choose_distrib:student_lab' user_id %}">Лаборатория</a></li>
   </ul>
 </div>
