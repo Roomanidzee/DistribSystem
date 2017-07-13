@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bootstrap Example</title>
+    <title>{{ user_name }} - DistribSystem</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{% static "userroles/css/bootstrap.min.css" %}" rel="stylesheet">
+   <!-- Bootstrap -->
+    <link href="{% static "userroles/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="{% static "userroles/css/style.css" %}">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -18,8 +19,21 @@
         <div class="col-sm-3 sidenav">
           <img class="img-padding" src="{% static "userroles/img/profile_logo.svg" %}">
           <h4>{{ user_name }} {{ user_surname }}</h4>
-          <!-- Здесь идут меню в зависимости от группы юзера -->
-          <!-- НАСТРОЙТЕ В ШАБЛОНАХ ССЫЛКИ -->
+          {% if is_student %}
+            {% include "accounts/parts/menus/student_menu.html" %}
+          {% endif %}
+          
+          {% if is_professor %}
+            {% include "accounts/parts/menus/professor_menu.html" %}
+          {% endif %}
+          
+          {% if is_cooperator %}
+            {% include "accounts/parts/menus/cooperator_menu.html" %}
+          {% endif %}
+          
+          {% if is_sci_director %}
+            {% include "accounts/parts/menus/sci_dir_menu.html" %}  
+          {% endif %}
           <ul class="nav nav-pills nav-stacked">
             <li class="active" ><a href="#section1">Мой профиль</a></li>
           </ul>
@@ -28,10 +42,11 @@
           <h4><small>Мой профиль:</small></h4>
           <hr>
           <!-- Здесь рисовать данные или таблицу практик или запросов -->
+          
         </div>
       </div>
     </div>
-    
+
     <footer class="container-fluid">
       <p>DistribSystem Team (c) 2017</p>
     </footer>
