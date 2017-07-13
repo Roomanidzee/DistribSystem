@@ -1,15 +1,19 @@
 <table border="1">
-  <caption>Название таблицы</caption>
-  <tr>
+  <caption>Таблица практик</caption>
+  
+  {% for temps in practice_dict.keys() %}
+     {% for new_k, v in temps.keys() %}
+  <!--<tr>
     <th>Название лаборатории</th>
     <th>Лидер лаборатории</th>
     <th>Занято/Всего</th>
     <th>Принять/Отклонить</th>
-  </tr>
+  </tr>-->
   <tr>
-    <td>DML</td>
-    <td>Андрей</td>
-    <td>10/100</td>
+ {% if temps[new_k] is v %} 
+    <td>{% v %}</td>
+    <td>{% v %}</td>
+    <td>{% v %}/{% temps[new_k] %}</td>
     <td>
       <form action="урл для принятия" method="post">
         <input type="submit" name="accept" value="Принять">
@@ -23,4 +27,6 @@
       Состояние: Нету/На рассмотрении
     </td>
   </tr>
+     {%endfor}
+  {% endfor %}
 </table>
