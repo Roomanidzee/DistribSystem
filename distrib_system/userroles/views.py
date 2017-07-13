@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from .utils import get_entity_from_db, initialize_user
+from .models import Student, Cooperator, Professor, ScientificDirector
 
 # Create your views here.
 
@@ -35,7 +36,6 @@ def new_login(request):
         username = request.POST.get('login')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-        print(user)
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -60,12 +60,20 @@ def my_profile(request, user_id):
 
     """Профиль текущего пользователя"""
     user = request.user
-    
+    user_entities = get_entity_from_db(user)
+    is_student = True if user_entities["std"] is not None else False
+    is_professor = True if user_entities["prof"] is not None else False
+    is_cooperator = True if user_entities["coop"] is not None else False
+    is_sci_director = True if user_entities["scdir"] is not None else False
     context = {
         "user_id": user.id,
         "user_surname": user.last_name,
         "user_name": user.first_name,
         "user_email": user.email,
+        "is_student": is_student,
+        "is_professor": is_professor,
+        "is_cooperator": is_cooperator,
+        "is_sci_director": is_sci_director
     }
     
     return render(request, "accounts/my_profile.html", context)
