@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
+from . import models
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
 
 # Create your views here.
@@ -115,21 +115,49 @@ def sci_dir(request, user_id):
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/sci_dir", context, context_instance=RequestContext(request))    
 
-def practice_form_request(request, user_id):
+def practice_form_request(request, user_id, practice_id):
+    chosen_practice = practice_id
+    user = user_id
+    request = Request()
+    request.student = user
+    request.container = chosen_practice
+    requset.status = 0
+    requset.request_type = 'PRACTICE'
+    requset.save()
     
-    pass
 
-def course_form_request(request, user_id):
+def course_form_request(request, user_id, course_id):
+    chosen_practice = course_id
+    user = user_id
+    request = Request()
+    request.student = user
+    request.container = chosen_practice
+    requset.status = 0
+    requset.request_type = 'COURSE'
+    requset.save()
     
-    pass
 
-def lab_request(request, user_id):
-    
-    pass
+def lab_request(request, user_id, lab_id):
+    chosen_practice = lab_id
+    user = user_id
+    request = Request()
+    request.student = user
+    request.container = chosen_practice
+    requset.status = 0
+    requset.request_type = 'LAB'
+    requset.save()
 
-def sci_dir_request(request, user_id):
-    
-    pass
+
+def sci_dir_request(request, user_id,sci_dir_id):
+    chosen_practice = practice_id
+    user = user_id
+    request = Request()
+    request.student = user
+    request.container = chosen_practice
+    requset.status = 0
+    requset.request_type = 'SCIENCE_HEAD'
+    requset.save()
+
 
 def accept(request, user_id1, user_id2):
     
