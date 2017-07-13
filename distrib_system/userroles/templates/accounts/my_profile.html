@@ -17,7 +17,7 @@
       <div class="row content">
         <div class="col-sm-3 sidenav">
           <img class="img-padding" src="{% static "userroles/img/profile_logo.svg" %}">
-          <h4>UserName</h4>
+          <h4>{{ user_name }} {{ user_surname }}</h4>
           <!-- Здесь идут меню в зависимости от группы юзера -->
           <!-- НАСТРОЙТЕ В ШАБЛОНАХ ССЫЛКИ -->
           <ul class="nav nav-pills nav-stacked">
@@ -27,10 +27,11 @@
         <div class="col-sm-9">
           <h4><small>Мой профиль:</small></h4>
           <hr>
+          <!-- Здесь рисовать данные или таблицу практик или запросов -->
         </div>
       </div>
     </div>
-
+    
     <footer class="container-fluid">
       <p>DistribSystem Team (c) 2017</p>
     </footer>
