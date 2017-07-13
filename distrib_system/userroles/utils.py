@@ -10,7 +10,6 @@ from django.contrib.auth.models import Group, User
 from .models import Student, Cooperator, Professor, ScientificDirector
 
 
-# author Андрей Романов
 def get_entity_from_db(user):
     result = []
     groups = list(user.groups.all())
@@ -26,7 +25,6 @@ def get_entity_from_db(user):
     return result
 
 
-# author Даниил Дёмин
 def initialize_user(user, positions):
     for p in positions:
         group, created = Group.objects.get_or_create(name=p)
