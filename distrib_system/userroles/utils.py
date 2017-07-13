@@ -22,13 +22,13 @@ def get_entity_from_db(user):
     for group in groups:
         # Если к юзер студент, то по ключу std выдаст ту самую сущность студента
         if group.name == 'student':
-            result["std"] = Student.objects.get(user = user)
+            result["std"] = Student.objects.get(user=user)
         if group.name == 'professor':
-            result["prof"] = Professor.objects.get(user = user)
+            result["prof"] = Professor.objects.get(user=user)
         if group.name == 'cooperator':
-            result["coop"] = Cooperator.objects.get(user = user)
+            result["coop"] = Cooperator.objects.get(user=user)
         if group.name == 'scientific_director':
-            result["scdir"] = ScientificDirector.objects.get(user = user)
+            result["scdir"] = ScientificDirector.objects.get(user=user)
     return result
 
 

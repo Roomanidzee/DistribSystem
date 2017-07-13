@@ -20,6 +20,17 @@
     <div class="container form-main-padding">
       <form class="form-signin" method="post" action="/accounts/login/">
         {% csrf_token %}
+
+
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+             {% endfor %}
+           </ul>
+        {% endif %}
+
+
         <img class="form-signin-heading" src="{% static "userroles/img/login_logo.jpeg" %}" width="95%">
         <label for="inputLogin" class="sr-only">Логин</label>
         <input type="login" id="inputLogin" class="form-control" placeholder="Логин" required autofocus name="login">
