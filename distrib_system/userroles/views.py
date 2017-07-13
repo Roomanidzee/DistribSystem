@@ -6,8 +6,11 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from . import utils
-from .utils import get_entity_from_db
+from .utils import get_entity_from_db, initialize_user
+
+'''
+@author: Роман Багаутдинов
+'''
 
 # Create your views here.
 
@@ -22,7 +25,7 @@ def register(request):
         user.email=request.POST['email']
         user.save()
         positions = request.POST.getlist('position')
-        utils.initialize_user(user, positions)
+        initialize_user(user, positions)
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
@@ -50,7 +53,9 @@ def new_login(request):
         else:            
                 raise Http404
     
-    return render(request, 'login.html')
+    else:
+    
+        return render(request, 'login.html')
         
 def new_logout(request):
     
@@ -66,17 +71,24 @@ def my_profile(request, user_id):
     user = request.user
 
     entity = get_entity_from_db(user)
-
+    
+    new_user = None
+    
+    for entities_item in entity:
+        
+        new_user = entities_item
+        
+    
     context = {
 
-        "user_id": user.id,
-        "user_surname": user.surname,
-        "user_name": user.name,
+        "user_id": str(new_user),
+        "user_surname": user.last_name,
+        "user_name": user.first_name,
         "user_email": user.email,
         
     }
     
-    return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
+    return render_to_response("accounts/my_profile.html", context)
 
 
 @login_required(login_url = '/accounts/login')

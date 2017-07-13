@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 
+app_name = 'choose_distrib'
 urlpatterns = [
     
     url(r'my_profile/(?P<user_id>[0-9]+)/practice', views.practice_form, name='practice'),
