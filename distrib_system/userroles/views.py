@@ -8,6 +8,10 @@ from django.http import Http404
 
 from .utils import get_entity_from_db, initialize_user
 
+'''
+@author: Роман Багаутдинов
+'''
+
 # Create your views here.
 
 
@@ -77,14 +81,14 @@ def my_profile(request, user_id):
     
     context = {
 
-        "user_id": new_user.id,
-        "user_surname": new_user.last_name,
-        "user_name": new_user.first_name,
-        "user_email": new_user.email,
+        "user_id": str(new_user),
+        "user_surname": user.last_name,
+        "user_name": user.first_name,
+        "user_email": user.email,
         
     }
     
-    return render_to_response("accounts/my_profile.html", context, context_instance=RequestContext(request))
+    return render_to_response("accounts/my_profile.html", context)
 
 
 @login_required(login_url = '/accounts/login')
