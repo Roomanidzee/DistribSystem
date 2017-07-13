@@ -1,31 +1,50 @@
-<form name="my_profile" method="post" action="здесь урл указывай">
+<form class="form-changing" method="post" action="{% url 'userroles:edit_profile' user_id %}">
+	{% csrf_token %}
 	<ul>
+
 		<li>Мой профиль</li>
-		<li>Имя: <br> само имя</li>
+		<li>Имя: <br> {{user_name}} </li>
 		<li>
-			<input type="text" placeholder="Изменить имя">
+			<input type="text" placeholder="Изменить имя" id="inputName" name="user_new_name">
 		</li>
-		<li>Фамилия: <br> сама фамилия</li>
+		<li>Фамилия: <br> {{user_surname}}</li>
 		<li>
-			<input type="text" placeholder="Изменить фамилию">
+			<input type="text" placeholder="Изменить фамилию" id="inputSurname" name="user_new_surname">
 		</li>
-		<li>Отчество: <br> само отчество</li>
+		<li>Username: <br> {{user_username}} </li>
 		<li>
-			<input type="text" placeholder="Изменить отчество">
+			<input type="text" placeholder="Изменить username" id="inputUsername" name="user_new_username">
 		</li>
-		<li>Email: <br> само email</li>
+		<li>Email: <br> {{user_email}} </li>
 		<li>
-			<input type="text" placeholder="Изменить email">
+			<input type="text" placeholder="Изменить email" id="inputEmail" name="user_new_email">
 		</li>
+
+		<li>
+			<input type="submit" placeholder="Подтвердить изменение профиля">
+		</li>
+
+	</ul>
+</form>
+
+<form class="form-changing" method="post" action="{% url 'userroles:edit_password' user_id %}">
+	{% csrf_token %}
+	<ul>
+
 		<li>Изменить пароль:</li>
 		<li>
-			<input type="text" placeholder="Старый пароль">
+			<input type="text" placeholder="Старый пароль" id="inputOldPass" name="user_old_pass">
 		</li>
 		<li>
-			<input type="text" placeholder="Новый пароль">
+			<input type="text" placeholder="Новый пароль" id="inputNewPass" name="user_new_pass">
 		</li>
 		<li>
-			<input type="submit">
+			<input type="text" placeholder="Повторите Новый пароль" id="inputNewPassConfirm" name="user_new_pass_confirm">
 		</li>
+
+		<li>
+			<input type="submit" placeholder="Подтвердить изменение пароля">
+		</li>
+
 	</ul>
 </form>
