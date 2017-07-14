@@ -7,10 +7,10 @@ Created on 13 июл. 2017 г.
 # -*- coding: utf-8 -*-
 
 from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHead
-#Автор следующих четырех функци1: Андрей
+
+
+# Автор следующих четырех функци1: Андрей
 def get_practice_from_db(user):
-    
-    student = StudentToLabStorage.objects.get(student = user)
     
     practices = Practice.objects.all()
     
