@@ -6,68 +6,25 @@ Created on 13 июл. 2017 г.
 '''
 # -*- coding: utf-8 -*-
 
-from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHead
-#Автор следующих четырех функци1: Андрей
+from .models import Laboratory, Practice, Course, ScienceHead
+
+
+# Автор следующих четырех функций: Андрей
 def get_practice_from_db(user):
-    
-    student = StudentToLabStorage.objects.get(student = user)
-    
     practices = Practice.objects.all()
-    
-    result = []
-    
-    for practice_item in practices:
-        
-        if practice_item.pk == student.pk:
-            
-            result.append(practice_item)
-    
-    return result
+    return list(practices)
+
 
 def get_course_from_db(user):
-    
-    student = StudentToLabStorage.objects.get(student = user)
-    
     courses = Course.objects.all()
-    
-    result = []
-    
-    for course_item in courses:
-        
-        if course_item.pk == student.pk:
-            
-            result.append(course_item)
-            
-    return result  
+    return list(courses)  
+
 
 def get_lab_from_db(user):
-    
-    student = StudentToLabStorage.objects.get(student = user) 
-    
     labs = Laboratory.objects.all() 
-    
-    result = []
-    
-    for lab_item in labs:
-        
-        if lab_item.pk == student.pk:
-            
-            result.append(lab_item)
-            
-    return result
+    return list(labs)
+
 
 def get_scidir_from_db(user):
-    
-    student = StudentToLabStorage.objects.get(student = user)
-    
     sci_dirs = ScienceHead.objects.all()
-    
-    result = []
-    
-    for scidir_item in sci_dirs:
-        
-        if scidir_item.pk == student.pk:
-            
-            result.append(scidir_item)
-            
-    return result               
+    return list(sci_dirs)               
