@@ -21,8 +21,6 @@ def student_practice_form(request, user_id):
     for practices in practices_for_student:
         occupied_places.append(len(StudentToLabStorage.objects.filter(container=practices)))
 
-
-
     context = {
         'occupied': occupied_places,
         'practices': practices_for_student,
@@ -35,16 +33,16 @@ def student_course_form(request, user_id):
     user = request.user
     courses_for_student = get_course_from_db(user)
     context = {
-       'courses' : courses_for_student 
+       'courses': courses_for_student
     }
-        
     return render(request, 'distribution/course_table.html', context)
+
 
 def student_lab(request, user_id):
     user = request.user
     labs_for_student = get_lab_from_db(user)
     context = {
-       'labs' : labs_for_student 
+       'labs': labs_for_student
     }
         
     return render(request, 'distribution/lab_table.html', context)
@@ -54,9 +52,10 @@ def student_sci_dir(request, user_id):
     user = request.user
     scidirs_for_student = get_scidir_from_db(user)
     context = {
-        'scidirs' : scidirs_for_student
+        'scidirs': scidirs_for_student
     }
     return render(request, 'distribution/sci_dir_table.html', context)
+
 
 ## Ниже неотлаженный код
 #########################
@@ -108,6 +107,7 @@ def student_sci_dir_make_request(request, user_id, sci_dir_id):
 '''
 PROFESSORS HERE
 '''
+
 
 def professor_practice_form(request, user_id):
     pass
@@ -182,6 +182,7 @@ def coop_practice_form(request, user_id):
     }
     return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))
 
+
 def coop_course_form(request, user_id):
     user = request.user
     requests = list(Request.objects.filter(request_type='COURSE'))
@@ -190,6 +191,7 @@ def coop_course_form(request, user_id):
     }
     return render_to_response("distribution/my_profile" + str(user.id) + "/choice_course", context, context_instance=RequestContext(request))
 
+
 def coop_lab_form(request, user_id):
     user = request.user
     requests = list(Request.objects.filter(request_type='LAB'))
@@ -197,6 +199,7 @@ def coop_lab_form(request, user_id):
         "requests": requests
     }
     return render_to_response("distribution/my_profile" + str(user.id) + "/lab", context, context_instance=RequestContext(request))
+
 
 def coop_sci_dir_form(request, user_id):
     user = request.user

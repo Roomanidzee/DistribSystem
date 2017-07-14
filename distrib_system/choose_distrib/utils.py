@@ -1,10 +1,10 @@
-'''
+"""
 Created on 13 июл. 2017 г.
 
 @author: Андрей Романов
-
-'''
+"""
 # -*- coding: utf-8 -*-
+
 
 from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHead
 
