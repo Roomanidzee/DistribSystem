@@ -14,6 +14,8 @@ def get_practice_from_db(user):
     
     practices = Practice.objects.all()
     
+    """
+    
     result = []
     
     for practice_item in practices:
@@ -21,8 +23,10 @@ def get_practice_from_db(user):
         if practice_item.pk == student.pk:
             
             result.append(practice_item)
+            
+    """        
     
-    return result
+    return list(practices)
 
 def get_course_from_db(user):
     
