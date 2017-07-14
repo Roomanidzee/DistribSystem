@@ -1,0 +1,29 @@
+<table border="1">
+  <caption>Таблица лабораторий</caption>
+
+  <tr>
+    <th>Название лаборатории</th>
+    <th>Лидер практики</th>
+    <th>Занято/Всего</th>
+    <th>Принять/Отклонить</th>
+  </tr>
+  <tr>
+  {% for lab in labs %}
+      <td> {{ lab.container_name }} </td>
+      <td> {{ lab.container_director }} </td>
+      <td> {{ lab.container_capacity }} </td>
+      <td>
+          <form action="урл для принятия" method="post">
+            <input type="submit" name="accept" value="Принять">
+          </form>
+          <form action="урл для отказа" method="post">
+            <input type="submit" name="decline" value="Отклонить">
+          </form>
+          <form action="урл для подачи заявки" method="post">
+            <input type="submit" name="decline" value="Подать заявку">
+          </form>
+          Состояние: Нету/На рассмотрении
+      </td>
+  </tr>
+  {% endfor %}
+</table>

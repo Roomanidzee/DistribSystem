@@ -35,7 +35,7 @@
             {% include "accounts/parts/menus/sci_dir_menu.html" %}  
           {% endif %}
           <ul class="nav nav-pills nav-stacked">
-            <li class="active" ><a href="#section1">Мой профиль</a></li>
+            <li class="active" ><a href="{% url 'userroles:profile' user_id%}">Мой профиль</a></li>
           </ul>
         </div>
         <div class="col-sm-9">
