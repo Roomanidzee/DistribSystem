@@ -1,3 +1,5 @@
+{% extends 'accounts/my_profile.html' %}
+{% block content %}
 <div class="col col-lg-5">
   <h2>Ваши данные:</h2>
   <form class="form-changing" method="post" action="{% url 'userroles:edit_profile' user_id %}">
@@ -47,3 +49,4 @@
     </ul>
   </form>
 </div>
+{% endblock %}

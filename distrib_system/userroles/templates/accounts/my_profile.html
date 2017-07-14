@@ -27,7 +27,7 @@
             {% if is_student %}
               {% include "accounts/parts/menus/student_menu.html" %}
             {% endif %}
-            
+
             {% if is_professor %}
               {% include "accounts/parts/menus/professor_menu.html" %}
             {% endif %}
@@ -45,7 +45,8 @@
           <h4><small>Домашняя</small></h4>
           <hr>
           <!-- Здесь рисовать данные или таблицу практик или запросов -->
-          {% include "accounts/parts/my_data.html" %}
+          {% block content %}
+          {% endblock %}
         </div>
       </div>
     </div>
