@@ -32,11 +32,8 @@ def student_practice_form(request, user_id):
 
 
 def student_course_form(request, user_id):
-    
     user = request.user
-    
     courses_for_student = get_course_from_db(user)
-    
     context = {
        'courses' : courses_for_student 
     }
@@ -44,11 +41,8 @@ def student_course_form(request, user_id):
     return render(request, 'distribution/course_table.html', context)
 
 def student_lab(request, user_id):
-    
     user = request.user
-    
     labs_for_student = get_lab_from_db(user)
-    
     context = {
        'labs' : labs_for_student 
     }
@@ -57,15 +51,15 @@ def student_lab(request, user_id):
 
 
 def student_sci_dir(request, user_id):
-    
     user = request.user
-    
     scidirs_for_student = get_scidir_from_db(user)
-    
     context = {
         'scidirs' : scidirs_for_student
     }
     return render(request, 'distribution/sci_dir_table.html', context)
+
+## Ниже неотлаженный код
+#########################
 
 def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
