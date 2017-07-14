@@ -1,0 +1,29 @@
+<table border="1">
+  <caption>Таблица курсовых</caption>
+
+  <tr>
+    <th>Курсовая работа</th>
+    <th>Научный руководитель</th>
+    <th>Занято/Всего</th>
+    <th>Принять/Отклонить</th>
+  </tr>
+  <tr>
+  {% for dir in sci_dirs %}
+      <td> {{ dir.container_name }} </td>
+      <td> {{ dir.container_director }} </td>
+      <td> {{ dir.container_capacity }} </td>
+      <td>
+          <form action="урл для принятия" method="post">
+            <input type="submit" name="accept" value="Принять">
+          </form>
+          <form action="урл для отказа" method="post">
+            <input type="submit" name="decline" value="Отклонить">
+          </form>
+          <form action="урл для подачи заявки" method="post">
+            <input type="submit" name="decline" value="Подать заявку">
+          </form>
+          Состояние: Нету/На рассмотрении
+      </td>
+  </tr>
+  {% endfor %}
+</table>

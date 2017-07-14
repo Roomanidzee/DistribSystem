@@ -1,0 +1,29 @@
+<table border="1">
+  <caption>Таблица курсов по выбору</caption>
+
+  <tr>
+    <th>Название курса</th>
+    <th>Лидер курса</th>
+    <th>Занято/Всего</th>
+    <th>Принять/Отклонить</th>
+  </tr>
+  <tr>
+  {% for course in courses %}
+      <td> {{ course.container_name }} </td>
+      <td> {{ course.container_director }} </td>
+      <td> {{ course.container_capacity }} </td>
+      <td>
+          <form action="урл для принятия" method="post">
+            <input type="submit" name="accept" value="Принять">
+          </form>
+          <form action="урл для отказа" method="post">
+            <input type="submit" name="decline" value="Отклонить">
+          </form>
+          <form action="урл для подачи заявки" method="post">
+            <input type="submit" name="decline" value="Подать заявку">
+          </form>
+          Состояние: Нету/На рассмотрении
+      </td>
+  </tr>
+  {% endfor %}
+</table>
