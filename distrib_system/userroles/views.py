@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+from django.contrib.auth import update_session_auth_hash
 
 from .utils import get_entity_from_db, initialize_user
 from .models import Student, Cooperator, Professor, ScientificDirector
@@ -71,6 +73,7 @@ def my_profile(request, user_id):
         "user_surname": user.last_name,
         "user_name": user.first_name,
         "user_email": user.email,
+        "user_username": user.username,
         "is_student": is_student,
         "is_professor": is_professor,
         "is_cooperator": is_cooperator,
@@ -81,10 +84,20 @@ def my_profile(request, user_id):
 
 
 @login_required(login_url='/accounts/login')
-def edit_profile(request, user_id):    
-    pass
+def edit_profile(request, user_id):
+    user = request.user
+    if request.POST["user_new_name"] is not "":
+        user.first_name = request.POST["user_new_name"]
+    if request.POST["user_new_surname"] is not "":
+        user.last_name = request.POST["user_new_surname"]
+    if request.POST["user_new_username"] is not "":
+        user.username = request.POST["user_new_username"]
+    if request.POST["user_new_email"] is not "":
+        user.email = request.POST["user_new_email"]
+    user.save()
+    return my_profile(request, user_id)
 
 
 @login_required(login_url='/accounts/login')
 def edit_password(request, user_id):    
-    pass
+    user = request.user

@@ -19,7 +19,7 @@ def student_practice_form(request, user_id):
     
     practices_for_student = get_practice_from_db(user)
     
-    context = {}
+    practice_dict = {}
     
     i = 0
     
@@ -36,7 +36,13 @@ def student_practice_form(request, user_id):
         
         i += 1
         
-        context['practice' + str(i)] = practice
+        practice_dict['practice' + str(i)] = practice
+        
+    context = {
+        
+       'practice_table' : practice_dict    
+        
+    }    
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))    
 
