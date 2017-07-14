@@ -1,11 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, render_to_response, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
+from django.contrib.auth import update_session_auth_hash
+
 from .utils import get_entity_from_db, initialize_user
+from .models import Student, Cooperator, Professor, ScientificDirector
 
 # Create your views here.
 
@@ -41,7 +46,7 @@ def new_login(request):
                 raise Http404
         else:
             messages.add_message(request, messages.INFO, 'Неправильный логин или пароль')
-            messages.get_messages(request)
+            mess = messages.get_messages(request)
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')

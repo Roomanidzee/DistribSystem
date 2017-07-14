@@ -1,12 +1,12 @@
-"""
+'''
 Created on 13 июл. 2017 г.
 
 @author: Андрей Романов
-"""
+
+'''
 # -*- coding: utf-8 -*-
 
-
-from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHead
+from .models import Laboratory, Practice, Course, ScienceHead
 
 
 # Автор следующих четырех функций: Андрей

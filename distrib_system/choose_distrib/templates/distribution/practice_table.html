@@ -1,3 +1,5 @@
+{% extends 'distribution/base_table.html' %}
+{% block content %}
 <table border="1">
   <caption>Таблица практик</caption>
 
@@ -11,7 +13,7 @@
   {% for practice in practices %}
       <td> {{ practice.container_name }} </td>
       <td> {{ practice.container_director }} </td>
-      <td> {% if occupied.count > 0 %} {{ occupied.count }} {% else %} 0 {% endif %}/ {{ practice.container_capacity }} </td>
+      <td> {% if occupied.len > 0 %} {{ occupied.len }} {% else %} 0 {% endif %}/ {{ practice.container_capacity }} </td>
       <td>
           <form action="урл для принятия" method="post">
             <input type="submit" name="accept" value="Принять">
@@ -27,3 +29,4 @@
   </tr>
   {% endfor %}
 </table>
+{% endblock %}
