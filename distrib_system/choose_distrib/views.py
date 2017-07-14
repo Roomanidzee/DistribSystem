@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from .models import Request, Container
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
@@ -13,21 +13,17 @@ from django.template.context_processors import request
 '''
 STUDENTS HERE
 '''
+
+
+# "distribution/my_profile" + str(user.id) + "/practice"
 def student_practice_form(request, user_id):
-    
     user = request.user
-    
     practices_for_student = get_practice_from_db(user)
-    
-   
-    
     context = {
-        
-        'practices' : practices_for_student
-        
-    }    
-        
-    return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))    
+        'practices': practices_for_student
+    }
+    return render(request, 'distribution/table.html', context)
+
 
 def student_course_form(request, user_id):
     
@@ -57,8 +53,7 @@ def student_course_form(request, user_id):
         context['course' + str(i)] = course
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/course", context, context_instance=RequestContext(request))    
-    
-    
+
 
 def student_lab(request, user_id):
     
@@ -86,6 +81,7 @@ def student_lab(request, user_id):
         context['lab' + str(i)] = lab
         
     return render_to_response("distribution/my_profile" + str(user.id) + "/lab", context, context_instance=RequestContext(request))    
+
 
 def student_sci_dir(request, user_id):
     
