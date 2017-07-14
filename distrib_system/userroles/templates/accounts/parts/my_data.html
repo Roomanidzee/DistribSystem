@@ -1,50 +1,49 @@
-<form class="form-changing" method="post" action="{% url 'userroles:edit_profile' user_id %}">
-	{% csrf_token %}
-	<ul>
+<div class="col col-lg-5">
+  <h2>Ваши данные:</h2>
+  <form class="form-changing" method="post" action="{% url 'userroles:edit_profile' user_id %}">
+    {% csrf_token %}
+    <ul class="list-group">
+      <li class="list-group-item">{{user_name}} </li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Изменить имя" id="inputName" name="user_new_name">
+      </li>
+      <li class="list-group-item">{{user_surname}}</li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Изменить фамилию" id="inputSurname" name="user_new_surname">
+      </li>
+      <li class="list-group-item">{{user_username}} </li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Изменить username" id="inputUsername" name="user_new_username">
+      </li>
+      <li class="list-group-item">{{user_email}} </li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Изменить email" id="inputEmail" name="user_new_email">
+      </li>
 
-		<li>Мой профиль</li>
-		<li>Имя: <br> {{user_name}} </li>
-		<li>
-			<input type="text" placeholder="Изменить имя" id="inputName" name="user_new_name">
-		</li>
-		<li>Фамилия: <br> {{user_surname}}</li>
-		<li>
-			<input type="text" placeholder="Изменить фамилию" id="inputSurname" name="user_new_surname">
-		</li>
-		<li>Username: <br> {{user_username}} </li>
-		<li>
-			<input type="text" placeholder="Изменить username" id="inputUsername" name="user_new_username">
-		</li>
-		<li>Email: <br> {{user_email}} </li>
-		<li>
-			<input type="text" placeholder="Изменить email" id="inputEmail" name="user_new_email">
-		</li>
+      <li class="list-group-item">
+        <button class="btn btn-primary btn-default btn-block" type="submit">Подтвердить изменение профиля</button>
+      </li>
 
-		<li>
-			<input type="submit" placeholder="Подтвердить изменение профиля">
-		</li>
-
-	</ul>
-</form>
-
-<form class="form-changing" method="post" action="{% url 'userroles:edit_password' user_id %}">
-	{% csrf_token %}
-	<ul>
-
-		<li>Изменить пароль:</li>
-		<li>
-			<input type="text" placeholder="Старый пароль" id="inputOldPass" name="user_old_pass">
-		</li>
-		<li>
-			<input type="text" placeholder="Новый пароль" id="inputNewPass" name="user_new_pass">
-		</li>
-		<li>
-			<input type="text" placeholder="Повторите Новый пароль" id="inputNewPassConfirm" name="user_new_pass_confirm">
-		</li>
-
-		<li>
-			<input type="submit" placeholder="Подтвердить изменение пароля">
-		</li>
-
-	</ul>
-</form>
+    </ul>  
+  </form>
+  <hr>
+  <h2>Сменить пароль:</h2>
+  <form class="form-changing" method="post" action="{% url 'userroles:edit_password' user_id %}">
+    {% csrf_token %}
+    <ul class="list-group">
+      <li class="list-group-item">Изменить пароль:</li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Старый пароль" id="inputOldPass" name="user_old_pass">
+      </li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Новый пароль" id="inputNewPass" name="user_new_pass">
+      </li>
+      <li class="list-group-item">
+        <input class="form-control" type="text" placeholder="Повторите Новый пароль" id="inputNewPassConfirm" name="user_new_pass_confirm">
+      </li>
+      <li class="list-group-item">
+        <button class="btn btn-primary btn-default btn-block" type="submit">Подвердить смену пароля</button>
+      </li>
+    </ul>
+  </form>
+</div>
