@@ -47,7 +47,7 @@ def student_lab(request, user_id):
        'labs' : labs_for_student 
     }
         
-    return render(request, 'distribution/labs_table.html', context)    
+    return render(request, 'distribution/lab_table.html', context)
 
 
 def student_sci_dir(request, user_id):
@@ -59,7 +59,7 @@ def student_sci_dir(request, user_id):
     context = {
         'scidirs' : scidirs_for_student
     }
-    return render(request, 'distribution/scidirs_table.html', context)    
+    return render(request, 'distribution/sci_dir_table.html', context)
 
 def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
