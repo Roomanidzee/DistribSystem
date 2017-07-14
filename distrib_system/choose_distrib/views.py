@@ -22,7 +22,7 @@ def student_practice_form(request, user_id):
     context = {
         'practices': practices_for_student
     }
-    return render(request, 'distribution/table.html', context)
+    return render(request, 'distribution/practice_table.html', context)
 
 
 def student_course_form(request, user_id):
