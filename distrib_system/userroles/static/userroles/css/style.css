@@ -80,8 +80,7 @@
 }
 
 .image-padding {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
 }
 
 /* Bootstrap addition for my_profile.html */
@@ -173,4 +172,8 @@ footer {
   text-decoration: none;
   outline: none;
 
+}
+
+.navbar {
+  margin-bottom: 0px;
 }

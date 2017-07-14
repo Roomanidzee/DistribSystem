@@ -14,15 +14,33 @@
     <script src="{% static 'userroles/js/bootstrap.min.js' %}"></script>
   </head>
   <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-targer="#topNavBar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'userroles:profile' user_id %}" >Добро пожаловать {{ user_name }} {{ user_surname }}!</a>
+        </div>
+        <div class="collapse navbar-collapse" id="topNavBar">
+          <ul class="nav navbar-nav">
+            <li class="">
+              <a href="{% url 'userroles:profile' user_id %}">Мой профиль</a>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right" action="{% url 'userroles:logout' %}">
+            <button class="btn btn-primary" type="submit">Выйти</button>
+          </form>
+        </div>
+      </div>
+    </nav>
     <div class="container-fluid">
       <div class="row content">
         <div class="col-sm-3 sidenav">
           <img class="image-padding" src="{% static "userroles/img/profile_logo.svg" %}">
           <div class="list-group">
-            <h4>{{ user_name }} {{ user_surname }}</h4>
-            <a href="{% url 'userroles:profile' user_id%}" class="list-group-item active">
-              <p class="list-group-item-text">Мой профиль</p>
-            </a>
             <br><br>
             {% if is_student %}
               {% include "accounts/parts/menus/student_menu.html" %}
