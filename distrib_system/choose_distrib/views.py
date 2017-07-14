@@ -19,28 +19,11 @@ def student_practice_form(request, user_id):
     
     practices_for_student = get_practice_from_db(user)
     
-    practice_dict = {}
+   
     
-    i = 0
-    
-    for practice_item in practices_for_student:
-        
-        practice = {
-            
-            'container_name' : practice_item.container_name,
-            'container_type' : practice_item.container_type,
-            'container_director' : practice_item.container_director,
-            'container_capacity' : practice_item.container_capacity
-            
-        }
-        
-        i += 1
-        
-        practice_dict['practice' + str(i)] = practice
-        
     context = {
         
-       'practice_table' : practice_dict    
+        'practices' : practices_for_student
         
     }    
         
@@ -53,6 +36,8 @@ def student_course_form(request, user_id):
     courses_for_student = get_course_from_db(user)
     
     context = {}
+    
+    
     
     i = 0
     
