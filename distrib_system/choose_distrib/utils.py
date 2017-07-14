@@ -12,9 +12,10 @@ from .models import Laboratory, StudentToLabStorage, Practice, Course, ScienceHe
 # Автор следующих четырех функций: Андрей
 def get_practice_from_db(user):
     
-    practices = Practice.objects.all()      
-    
+    practices = Practice.objects.all()
+
     return list(practices)
+
 
 def get_course_from_db(user):
     
@@ -22,11 +23,13 @@ def get_course_from_db(user):
             
     return list(courses)  
 
+
 def get_lab_from_db(user):
     
     labs = Laboratory.objects.all()
             
     return list(labs)
+
 
 def get_scidir_from_db(user):
     

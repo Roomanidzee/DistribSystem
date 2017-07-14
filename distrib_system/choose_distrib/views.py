@@ -1,10 +1,8 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from .models import Request, Container
+from .models import Request, Container, StudentToLabStorage
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
-
-from django.template.context_processors import request
 
 # Create your views here.
 '''
@@ -19,8 +17,16 @@ STUDENTS HERE
 def student_practice_form(request, user_id):
     user = request.user
     practices_for_student = get_practice_from_db(user)
+    occupied_places = []
+    for practices in practices_for_student:
+        occupied_places.append(len(StudentToLabStorage.objects.filter(container=practices)))
+
+
+
     context = {
-        'practices': practices_for_student
+        'occupied': occupied_places,
+        'practices': practices_for_student,
+
     }
     return render(request, 'distribution/practice_table.html', context)
 
