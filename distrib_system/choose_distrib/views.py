@@ -30,11 +30,8 @@ def student_form(request, user_id, request_type):
     return render(request, 'accounts/parts/container_table.html', context)
 
 
-
 # Ниже неотлаженный код
 #########################
-
-
 def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
     user = user_id
