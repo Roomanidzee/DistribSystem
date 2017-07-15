@@ -11,8 +11,7 @@ from django.contrib.auth.models import User
 
 
 class Container(models.Model):
-    class Meta:
-        abstract = True
+
     # Абстрактный контейнер. НЕ СОЗДАВАТЬ ОБЪЕКТЫ, ТОЛЬКО НАСЛЕДНИКИ
     container_name = models.CharField(max_length=100, verbose_name='Название')
     container_director = models.OneToOneField(User, on_delete=models.CASCADE)
