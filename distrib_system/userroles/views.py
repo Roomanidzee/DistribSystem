@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
-from .utils import get_entity_from_db, initialize_user
+from .utils import *
 
 # Create your views here.
 
@@ -57,14 +57,13 @@ def new_logout(request):
     return HttpResponseRedirect('/accounts/login/')
                 
 
+@login_required(login_url='/accounts/login')
 def base_context(request):
     user = request.user
-    user_entities = get_entity_from_db(user)
-    for entity in user_entities:
-        is_student = entity._meta.verbose_name == 'student'
-        is_cooperator = entity._meta.verbose_name == 'cooperator'
-        is_professor = entity._meta.verbose_name == 'professor'
-        is_sci_director = entity._meta.verbose_name == 'scientific director'
+    is_student = is_something(user,'Student')
+    is_cooperator = is_something(user,'Cooperator')
+    is_professor = is_something(user,'Professor')
+    is_sci_director = is_something(user,'ScientificDirector')
     context = {
         "user_id": user.id,
         "user_surname": user.last_name,
