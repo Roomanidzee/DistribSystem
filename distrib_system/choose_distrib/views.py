@@ -21,7 +21,6 @@ def student_practice_form(request, user_id):
         'user_id': user_id,
         'pairs': list_of_pairs,
     }
-    context.update(base_context(request))
     return render(request, 'accounts/parts/container_table.html', context)
 
 
