@@ -1,6 +1,4 @@
-<div>
-  <h5>Научному руководителю</h5>
-  <ul class="nav nav-pills nav-stacked">
-    <li><a href="{% url 'choose_distrib:sc_dir_sci_dir' user_id %}">Курсовые работы</a></li>
-  </ul>
-</div>
+<h5>Научному руководителю</h5>
+<a href="{% url 'choose_distrib:sc_dir_sci_dir' user_id %}" class="list-group-item">
+    <p class="list-group-item-text">Курсовые работы</p>
+</a>
