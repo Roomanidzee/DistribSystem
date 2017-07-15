@@ -11,10 +11,10 @@
     <th>Действия</th>
   </tr>
   <tr>
-  {% for cont in containers %}
-      <td> {{ cont.container_name }} </td>
-      <td> {{ cont.container_director }} </td>
-      <td> {{ cont.occupied }} / {{ cont.container_capacity }} </td>
+  {% for content in pairs %}
+      <td> {{ content.first_item.container_name }} </td>
+      <td> {{ content.first_item.container_director }} </td>
+      <td> {{ content.second_item }} / {{ content.first_item.container_capacity }} </td>
       <td>
           <form action="урл для подачи заявки" method="post">
             <input type="submit" name="decline" value="Подать заявку">
