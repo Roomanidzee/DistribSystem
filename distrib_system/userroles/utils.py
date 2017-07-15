@@ -12,23 +12,17 @@ from .models import Student, Cooperator, Professor, ScientificDirector
 
 # Возвращает ассоц. массив
 def get_entity_from_db(user):
-    result = {
-        "std": None,
-        "prof": None,
-        "coop": None,
-        "scdir": None
-    }
+    result = []
     groups = list(user.groups.all())
     for group in groups:
-        # Если к юзер студент, то по ключу std выдаст ту самую сущность студента
         if group.name == 'student':
-            result["std"] = Student.objects.get(user=user)
+            result.append(Student.objects.get(user_id=user.id))
         if group.name == 'professor':
-            result["prof"] = Professor.objects.get(user=user)
+            result.append(Professor.objects.get(user_id=user.id))
         if group.name == 'cooperator':
-            result["coop"] = Cooperator.objects.get(user=user)
+            result.append(Cooperator.objects.get(user_id=user.id))
         if group.name == 'scientific_director':
-            result["scdir"] = ScientificDirector.objects.get(user=user)
+            result.append(ScientificDirector.objects.get(user_id=user.id))
     return result
 
 
