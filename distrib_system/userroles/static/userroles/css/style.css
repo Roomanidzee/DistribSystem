@@ -80,8 +80,7 @@
 }
 
 .image-padding {
-  padding-top: 20px;
-  padding-bottom: 5px;
+  padding-top: 10px;
 }
 
 /* Bootstrap addition for my_profile.html */
@@ -108,4 +107,73 @@ footer {
     padding: 15px;
   }
   .row.content {height: auto;} 
+}
+
+/* Bootstrap addition for universal table */
+.table>thead>tr{
+  background-color: #0074D9;
+  color:#ffffff;
+}
+
+.btn-success-outline{
+  color: #fff;
+  background-color: #0074D9;
+  border-color: #5cb85c;
+  border-radius: 10px;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn-success-outline:hover{
+  color:#fff;
+}
+
+.waitbutton{
+  background-color: #808080;
+  color:#fff;
+  border-color: #4a4848;
+  outline: none;
+}
+
+.cancelbutton{
+  display: inline-block;
+  background-color: rgba(217, 83, 79, 0.8);
+  border-color: #ba3838;
+  color:#fff;
+  outline: none;
+}
+
+.cancelbutton:hover{
+  background-color: rgba(217, 83, 79, 1);
+  border-color: #ba3838;
+  color:#fff;
+  outline: none;
+  text-decoration: none;
+}
+
+.successbutton{
+  display: inline-block;
+  background-color: rgba(46, 204, 113, 0.8);
+  border-color: #25a25a;
+  color: #fff;
+  outline: none;
+}
+
+.successbutton:hover{
+  background-color: rgba(46, 204, 113, 1);
+  border-color: #25a25a;
+  color:#fff;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn-success-outline:focus,.cancelbutton:focus,.successbutton:focus{
+  color:#fff;
+  text-decoration: none;
+  outline: none;
+
+}
+
+.navbar {
+  margin-bottom: 0px;
 }

@@ -53,7 +53,6 @@ def new_login(request):
 
 
 def new_logout(request):
-    
     logout(request)
     return HttpResponseRedirect('/accounts/login/')
                 
@@ -80,7 +79,7 @@ def my_profile(request, user_id):
         "is_sci_director": is_sci_director
     }
     
-    return render(request, "accounts/my_profile.html", context)
+    return render(request, "accounts/parts/my_data.html", context)
 
 
 @login_required(login_url='/accounts/login')
