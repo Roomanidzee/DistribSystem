@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 
-from .models import Request, Container, StudentToLabStorage
+from .models import Request, Container
 from .utils import get_practice_with_number_of_occupied_from_db, get_course_with_number_of_occupied_from_db, \
     get_lab_with_number_of_occupied_from_db, get_sci_dir_with_number_of_occupied_from_db
 

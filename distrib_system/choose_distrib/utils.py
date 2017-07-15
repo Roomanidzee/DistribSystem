@@ -16,7 +16,7 @@ class Pair:
         self.second_item = second_item
 
 
-# Автор следующих четырех функций: Андрей
+# Автор следующих четырех функций: Роман
 def get_practice_with_number_of_occupied_from_db(user):
     practices = Practice.objects.all()
 

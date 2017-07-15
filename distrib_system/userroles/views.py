@@ -45,7 +45,7 @@ def new_login(request):
                 raise Http404
         else:
             messages.add_message(request, messages.INFO, 'Неправильный логин или пароль')
-            mess = messages.get_messages(request)
+            messages.get_messages(request)
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
@@ -81,10 +81,6 @@ def base_context(request):
 
 @login_required(login_url='/accounts/login')
 def my_profile(request, user_id):
-
-    """Профиль текущего пользователя"""
-    user = request.user
-    
     return render(request, "accounts/parts/my_data.html", base_context(request))
 
 
