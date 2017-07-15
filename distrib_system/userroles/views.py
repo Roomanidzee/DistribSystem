@@ -81,14 +81,15 @@ def base_context(request):
         "is_sci_director": is_sci_director
     }
     return context
-                
+
+
 @login_required(login_url='/accounts/login')
 def my_profile(request, user_id):
 
     """Профиль текущего пользователя"""
     user = request.user
     
-    return render(request, "distribution/base_table.html", base_context(request))
+    return render(request, "accounts/my_profile.html", base_context(request))
 
 
 @login_required(login_url='/accounts/login')
