@@ -1,10 +1,10 @@
 <h5>Преподователю</h5>
-<a href="{% url 'choose_distrib:professor_practice' user_id %}" class="list-group-item">
+<a href="{% url 'choose_distrib:professor' user_id 'PRACTICE' %}" class="list-group-item">
     <p class="list-group-item-text">Практика</p>
 </a>
-<a href="{% url 'choose_distrib:professor_choice_course' user_id %}" class="list-group-item">
+<a href="{% url 'choose_distrib:professor' user_id 'COURSE' %}" class="list-group-item">
     <p class="list-group-item-text">Курс по выбору</p>
 </a>
-<a href="{% url 'choose_distrib:professor_lab' user_id %}" class="list-group-item">
+<a href="{% url 'choose_distrib:professor' user_id 'LAB' %}" class="list-group-item">
     <p class="list-group-item-text">Лаборатории</p>
 </a>

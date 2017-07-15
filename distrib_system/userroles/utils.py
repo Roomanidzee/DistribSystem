@@ -8,7 +8,17 @@ Created on 12 июл. 2017 г.
 
 from django.contrib.auth.models import Group, User
 from .models import Student, Cooperator, Professor, ScientificDirector
+import importlib
 
+modulename, dot, classname = 'userroles.models.classname'.rpartition('.')
+module = importlib.import_module(modulename)
+
+def is_something(user, name):
+    try :
+        if getattr(module, name).objects.get(user_id=user.id) is not None:
+            return True
+    except:
+        return False
 
 # Возвращает ассоц. массив
 def get_entity_from_db(user):
