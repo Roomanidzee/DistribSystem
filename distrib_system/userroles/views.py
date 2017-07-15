@@ -27,9 +27,12 @@ def register(request):
         initialize_user(user, positions)
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
-            login(request, user)
-            messages.add_message(request, messages.INFO, 'Incorrect')
-            return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
+            if user.is_active:
+                login(request, user)
+                messages.add_message(request, messages.INFO, 'Incorrect')
+                return HttpResponseRedirect('/accounts/my_profile/' + str(user.id))
+            else:
+                messages.add_message(request, messages.INFO, 'Your account is not active')
     return render(request, 'register.html')
 
 
@@ -53,20 +56,19 @@ def new_login(request):
 
 
 def new_logout(request):
+    
     logout(request)
     return HttpResponseRedirect('/accounts/login/')
                 
 
-@login_required(login_url='/accounts/login')
-def my_profile(request, user_id):
-
-    """Профиль текущего пользователя"""
+def base_context(request):
     user = request.user
     user_entities = get_entity_from_db(user)
-    is_student = True if user_entities["std"] is not None else False
-    is_professor = True if user_entities["prof"] is not None else False
-    is_cooperator = True if user_entities["coop"] is not None else False
-    is_sci_director = True if user_entities["scdir"] is not None else False
+    for entity in user_entities:
+        is_student = entity._meta.verbose_name == 'student'
+        is_cooperator = entity._meta.verbose_name == 'cooperator'
+        is_professor = entity._meta.verbose_name == 'professor'
+        is_sci_director = entity._meta.verbose_name == 'scientific director'
     context = {
         "user_id": user.id,
         "user_surname": user.last_name,
@@ -78,8 +80,15 @@ def my_profile(request, user_id):
         "is_cooperator": is_cooperator,
         "is_sci_director": is_sci_director
     }
+    return context
+                
+@login_required(login_url='/accounts/login')
+def my_profile(request, user_id):
+
+    """Профиль текущего пользователя"""
+    user = request.user
     
-    return render(request, "accounts/parts/my_data.html", context)
+    return render(request, "distribution/base_table.html", base_context(request))
 
 
 @login_required(login_url='/accounts/login')
