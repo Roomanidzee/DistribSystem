@@ -1,0 +1,28 @@
+{% extends 'accounts/my_profile.html' %}
+{% block content %}
+<table border="1">
+  <caption>Таблица реквестов</caption>
+  
+  <tr>
+    <th>Кто подал реквест</th>
+    <th>Название контейнера</th>
+    <th>Статус</th>
+    <th>Действие</th>
+  </tr>
+  <tr>
+  {% for req in requests %}
+      <td> {{ req.student }} </td>
+      <td> {{ req.container }} </td>
+      <td> {{ req.status }} </td>
+      <td>
+        <form action="урл для принятия" method="post">
+          <input type="submit" name="accept" value="Принять">
+        </form>
+        <form action="урл для отказа" method="post">
+          <input type="submit" name="decline" value="Отклонить">
+        </form>
+      </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

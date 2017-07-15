@@ -1,0 +1,27 @@
+{% extends 'accounts/my_profile.html' %}
+{% block content %}
+
+<table border="1">
+  <caption>Таблица контейнеров</caption>
+
+  <tr>
+    <th>Название</th>
+    <th>Руководитель</th>
+    <th>Занято/Всего</th>
+    <th>Действия</th>
+  </tr>
+  <tr>
+  {% for cont in containers %}
+      <td> {{ cont.container_name }} </td>
+      <td> {{ cont.container_director }} </td>
+      <td> {{ cont.occupied }} / {{ cont.container_capacity }} </td>
+      <td>
+          <form action="урл для подачи заявки" method="post">
+            <input type="submit" name="decline" value="Подать заявку">
+          </form>
+          Состояние: Нету/На рассмотрении
+      </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
