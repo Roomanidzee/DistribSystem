@@ -3,7 +3,8 @@ from django.shortcuts import render
 
 from .models import Request, Container
 from .utils import get_practice_with_number_of_occupied_from_db, get_course_with_number_of_occupied_from_db, \
-    get_lab_with_number_of_occupied_from_db, get_sci_dir_with_number_of_occupied_from_db
+    get_lab_with_number_of_occupied_from_db, get_sci_dir_with_number_of_occupied_from_db  
+from .utils import get_practice_requests, get_course_requests   
 
 # Create your views here.
 '''
@@ -17,9 +18,11 @@ STUDENTS HERE
 def student_practice_form(request, user_id):
     user = request.user
     list_of_pairs = get_practice_with_number_of_occupied_from_db(user)
+    student_requests = get_practice_requests(user)
     context = {
         'user_id': user_id,
         'pairs': list_of_pairs,
+        'requests': student_requests
     }
     return render(request, 'accounts/parts/container_table.html', context)
 
