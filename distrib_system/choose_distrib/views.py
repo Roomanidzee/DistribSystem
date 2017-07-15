@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, render
-from django.template import RequestContext
+from django.contrib import messages
 from .models import Request, Container, StudentToLabStorage
 from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
+from userroles.views import base_context
 
 # Create your views here.
 '''
@@ -21,12 +22,11 @@ def student_practice_form(request, user_id):
     for practices in practices_for_student:
         temp = StudentToLabStorage.objects.filter(container=practices).distinct().count()
         occupied_places.append(temp)
-
     context = {
         'occupied': occupied_places,
         'practices': practices_for_student,
-
     }
+    context.update(base_context(request))
     return render(request, 'distribution/practice_table.html', context)
 
 
@@ -36,7 +36,7 @@ def student_course_form(request, user_id):
     context = {
        'courses' : courses_for_student 
     }
-        
+    context.update(base_context(request))
     return render(request, 'distribution/course_table.html', context)
 
 def student_lab(request, user_id):
@@ -55,6 +55,7 @@ def student_sci_dir(request, user_id):
     context = {
         'scidirs' : scidirs_for_student
     }
+    context.update(base_context(request))
     return render(request, 'distribution/sci_dir_table.html', context)
 
 ## Ниже неотлаженный код
@@ -109,52 +110,90 @@ PROFESSORS HERE
 '''
 
 def professor_practice_form(request, user_id):
-    pass
-
-
+    user = request.user
+    requests = list(Request.objects.filter(request_type='PRACTICE', container=Container.objects.get(container_director=user)))
+    context = {
+        "requests": requests,
+    }
+    context.update(base_context(request))
+    return render(request, 'distribution/practice_table.html', context)
+    
 def professor_choice_course_form(request, user_id):
-    pass
-
+    user = request.user
+    requests = list(Request.objects.filter(request_type='COURSE', container=Container.objects.get(container_director=user)))
+    context = {
+        "requests": requests,
+    }
+    context.update(base_context(request))
+    return render(request, 'distribution/course_table.html', context)
 
 def professor_lab_form(request, user_id):
-    pass
-
-
-def professor_practice_accept(request, user_id1, user_id2):
-    pass
+    user = request.user
+    requests = list(Request.objects.filter(request_type='LAB', container=Container.objects.get(container_director=user)))
+    context = {
+        "requests": requests,
+    }
+    context.update(base_context(request))
+    return render(request, 'distribution/lab_table.html', context)
+    
+def professor_practice_accept(request, user_id1, user_id2, status):
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='PRACTICE', container=Container.objects.get(container_director=user))
+    request.status = 1
+    request.save()
 
 
 def professor_course_accept(request, user_id1, user_id2):
-    pass
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='COURSE', container=Container.objects.get(container_director=user))
+    request.status = 1
+    request.save()
 
 
 def professor_lab_accept(request, user_id1, user_id2):
-    pass
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='LAB', container=Container.objects.get(container_director=user))
+    request.status = 1
+    request.save()
 
 
 def professor_practice_decline(request, user_id1, user_id2):
-    pass
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='PRACTICE', container=Container.objects.get(container_director=user))
+    request.status = 2
+    request.save()
 
 
 def professor_course_decline(request, user_id1, user_id2):
-    pass
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='COURSE', container=Container.objects.get(container_director=user))
+    request.status = 2
+    request.save()
 
 
 def professor_lab_decline(request, user_id1, user_id2):
-    pass
+    user = request.user
+    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='LAB', container=Container.objects.get(container_director=user))
+    request.status = 2
+    request.save()
 
 '''
 SCIENCE DIR HERE
 '''
 
 
-def sci_dir_form(request, user_id):
+def sci_dir_form(request, user_id, request_type):
     user = request.user
-    requests = list(Request.objects.filter(request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user)))
-    context = {
-        "requests": requests,
-    }
-    return render_to_response("distribution/my_profile" + str(user.id) + "/requests", context, context_instance=RequestContext(request))
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'distribution/practice_table.html', context)
 
 def sci_dir_accept(request, user_id1, user_id2):
     user = request.user
@@ -173,37 +212,57 @@ COOPERATORS HERE
 '''
 
 
-def coop_practice_form(request, user_id):
+def coop_practice_form(request, user_id, request_type):
     user = request.user
-    requests = list(Request.objects.filter(request_type='PRACTICE'))
-    context = {
-        "requests": requests
-    }
-    return render_to_response("distribution/my_profile" + str(user.id) + "/practice", context, context_instance=RequestContext(request))
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'distribution/practice_table.html', context)
 
 def coop_course_form(request, user_id):
     user = request.user
-    requests = list(Request.objects.filter(request_type='COURSE'))
-    context = {
-        "requests": requests
-    }
-    return render_to_response("distribution/my_profile" + str(user.id) + "/choice_course", context, context_instance=RequestContext(request))
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type='COURSE', container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'distribution/course_table.html', context)
 
 def coop_lab_form(request, user_id):
     user = request.user
-    requests = list(Request.objects.filter(request_type='LAB'))
-    context = {
-        "requests": requests
-    }
-    return render_to_response("distribution/my_profile" + str(user.id) + "/lab", context, context_instance=RequestContext(request))
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type='LAB', container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'distribution/lab_table.html', context)
 
 def coop_sci_dir_form(request, user_id):
     user = request.user
-    requests = list(Request.objects.filter(request_type='SCIENCE_HEAD'))
-    context = {
-        "requests": requests
-    }
-    return render_to_response("distribution/my_profile" + str(user.id) + "/sci_dir", context, context_instance=RequestContext(request))
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'distribution/sci_dir_table.html', context)
 
 
 
