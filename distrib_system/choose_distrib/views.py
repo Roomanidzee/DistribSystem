@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
-
-from .models import Request, Container
-from .utils import get_practice_with_number_of_occupied_from_db, get_course_with_number_of_occupied_from_db, \
-    get_lab_with_number_of_occupied_from_db, get_sci_dir_with_number_of_occupied_from_db  
-from .utils import get_practice_requests, get_course_requests   
+from django.shortcuts import render_to_response, render
+from django.contrib import messages
+from .models import Request, Container, StudentToLabStorage
+from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db, \
+    get_container_with_number_of_occupied_from_db
+from userroles.views import base_context
+import importlib
 
 # Create your views here.
 '''
@@ -14,47 +15,20 @@ from .utils import get_practice_requests, get_course_requests
 STUDENTS HERE
 '''
 
+modulename, dot, classname = 'choose_distrib.models.classname'.rpartition('.')
+module = importlib.import_module(modulename)
 
-def student_practice_form(request, user_id):
+
+# "distribution/my_profile" + str(user.id) + "/practice"
+def student_form(request, user_id, request_type):
     user = request.user
-    list_of_pairs = get_practice_with_number_of_occupied_from_db(user)
-    student_requests = get_practice_requests(user)
+    containers_for_student = get_container_with_number_of_occupied_from_db(user, module, request_type)
     context = {
-        'user_id': user_id,
-        'pairs': list_of_pairs,
-        'requests': student_requests
+        'pairs': containers_for_student,
     }
+    context.update(base_context(request))
     return render(request, 'accounts/parts/container_table.html', context)
 
-
-def student_course_form(request, user_id):
-    user = request.user
-    list_of_pairs = get_course_with_number_of_occupied_from_db(user)
-    context = {
-        'user_id': user_id,
-        'pairs': list_of_pairs,
-    }
-    return render(request, 'accounts/parts/container_table.html', context)
-
-
-def student_lab(request, user_id):
-    user = request.user
-    list_of_pairs = get_lab_with_number_of_occupied_from_db(user)
-    context = {
-        'user_id': user_id,
-        'pairs': list_of_pairs,
-    }
-    return render(request, 'accounts/parts/container_table.html', context)
-
-
-def student_sci_dir(request, user_id):
-    user = request.user
-    list_of_pairs = get_sci_dir_with_number_of_occupied_from_db(user)
-    context = {
-        'user_id': user_id,
-        'pairs': list_of_pairs,
-    }
-    return render(request, 'accounts/parts/container_table.html', context)
 
 
 # Ниже неотлаженный код
