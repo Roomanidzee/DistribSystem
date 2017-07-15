@@ -1,16 +1,12 @@
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
-from django.contrib.auth import update_session_auth_hash
 
 from .utils import get_entity_from_db, initialize_user
-from .models import Student, Cooperator, Professor, ScientificDirector
 
 # Create your views here.
 
@@ -49,7 +45,7 @@ def new_login(request):
                 raise Http404
         else:
             messages.add_message(request, messages.INFO, 'Неправильный логин или пароль')
-            mess = messages.get_messages(request)
+            messages.get_messages(request)
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
@@ -81,14 +77,11 @@ def base_context(request):
         "is_sci_director": is_sci_director
     }
     return context
-                
+
+
 @login_required(login_url='/accounts/login')
 def my_profile(request, user_id):
-
-    """Профиль текущего пользователя"""
-    user = request.user
-    
-    return render(request, "distribution/base_table.html", base_context(request))
+    return render(request, "accounts/parts/my_data.html", base_context(request))
 
 
 @login_required(login_url='/accounts/login')

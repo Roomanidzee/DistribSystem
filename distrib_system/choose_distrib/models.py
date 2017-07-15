@@ -11,8 +11,6 @@ from django.contrib.auth.models import User
 
 
 class Container(models.Model):
-    #class Meta:
-    #    abstract = True
     # Абстрактный контейнер. НЕ СОЗДАВАТЬ ОБЪЕКТЫ, ТОЛЬКО НАСЛЕДНИКИ
     container_name = models.CharField(max_length=100, verbose_name='Название')
     container_director = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -20,13 +18,16 @@ class Container(models.Model):
         default=0,
         validators=[MaxValueValidator(300), MinValueValidator(0)]
     )
-    '''
-    3 - LAB
-    4 - COURSE
-    5 - PRACTICE
-    6 - SCIENCE_HEAD
-    '''
-    container_type = models.CharField(max_length=20, default="")
+    CONTAINERCHOISE = (
+        ('LAB', 'laboratory'),
+        ('COURSE', 'course'),
+        ('PRACTICE', 'practice'),
+        ('SCIENCE_HEAD', 'science_director')
+    )
+    container_type = models.CharField(max_length=20, choices=CONTAINERCHOISE)
+
+    def __str__(self):
+        return self.container_name
 
 
 class Laboratory(Container):
@@ -57,24 +58,24 @@ class Request(models.Model):
     # Запрос в "контейнер"
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     container = models.ForeignKey(Container, on_delete=models.CASCADE)
-    
-    '''
-    0 = SENDED
-    1 = ACCEPTED
-    2 = DECLINED 
-    '''
+
+    STATUS = (
+        (0, 'SENDED'),
+        (1, 'ACCEPTED'),
+        (2, 'DECLINED'),
+    )
     status = models.IntegerField(
         default=0,
-        validators=[MaxValueValidator(2), MinValueValidator(0)]
+        validators=[MaxValueValidator(2), MinValueValidator(0)],
+        choices=STATUS
     )
-
-    '''
-    LAB - для лабораторий
-    COURSE - для курсов
-    PRACTICE - для практик
-    SCIENCE_HEAD - для научруков
-    '''
-    request_type = models.CharField(max_length=20, default="")
+    REQUESTTYPE = (
+        ('LAB', 'laboratory'),
+        ('COURSE', 'course'),
+        ('PRACTICE', 'practice'),
+        ('SCIENCE_HEAD', 'science_director')
+    )
+    request_type = models.CharField(max_length=20, choices=REQUESTTYPE)
 
     send_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateField(auto_now=True)

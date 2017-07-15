@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response, render
 from django.contrib import messages
 from .models import Request, Container, StudentToLabStorage
-from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db
+from .utils import get_practice_from_db, get_course_from_db, get_lab_from_db, get_scidir_from_db, \
+    get_container_with_number_of_occupied_from_db
 from userroles.views import base_context
+import importlib
 
 # Create your views here.
 '''
@@ -13,54 +15,23 @@ from userroles.views import base_context
 STUDENTS HERE
 '''
 
+modulename, dot, classname = 'choose_distrib.models.classname'.rpartition('.')
+module = importlib.import_module(modulename)
+
 
 # "distribution/my_profile" + str(user.id) + "/practice"
-def student_practice_form(request, user_id):
+def student_form(request, user_id, request_type):
     user = request.user
-    practices_for_student = get_practice_from_db(user)
-    occupied_places = []
-    for practices in practices_for_student:
-        temp = StudentToLabStorage.objects.filter(container=practices).distinct().count()
-        occupied_places.append(temp)
+    containers_for_student = get_container_with_number_of_occupied_from_db(user, module, request_type)
     context = {
-        'occupied': occupied_places,
-        'practices': practices_for_student,
+        'pairs': containers_for_student,
     }
     context.update(base_context(request))
-    return render(request, 'distribution/practice_table.html', context)
+    return render(request, 'accounts/parts/container_table.html', context)
 
 
-def student_course_form(request, user_id):
-    user = request.user
-    courses_for_student = get_course_from_db(user)
-    context = {
-       'courses' : courses_for_student 
-    }
-    context.update(base_context(request))
-    return render(request, 'distribution/course_table.html', context)
-
-def student_lab(request, user_id):
-    user = request.user
-    labs_for_student = get_lab_from_db(user)
-    context = {
-       'labs' : labs_for_student 
-    }
-        
-    return render(request, 'distribution/lab_table.html', context)
-
-
-def student_sci_dir(request, user_id):
-    user = request.user
-    scidirs_for_student = get_scidir_from_db(user)
-    context = {
-        'scidirs' : scidirs_for_student
-    }
-    context.update(base_context(request))
-    return render(request, 'distribution/sci_dir_table.html', context)
-
-## Ниже неотлаженный код
+# Ниже неотлаженный код
 #########################
-
 def student_practice_make_request(request, user_id, practice_id):
     chosen_practice = practice_id
     user = user_id
