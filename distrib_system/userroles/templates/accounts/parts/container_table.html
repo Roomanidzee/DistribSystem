@@ -9,6 +9,7 @@
     <th>Руководитель</th>
     <th>Занято/Всего</th>
     <th>Действия</th>
+    <th>Состояние</th>
   </tr>
   <tr>
   {% for content in pairs %}
@@ -19,9 +20,12 @@
           <form action="урл для подачи заявки" method="post">
             <input type="submit" name="decline" value="Подать заявку">
           </form>
-          Состояние: Нету/На рассмотрении
       </td>
+   {% endfor %}
+   {% for user_requests in requests %}
+       <td> {{user_requests.status }} </td> 
+   {% endfor %}     
   </tr>
-  {% endfor %}
+  
 </table>
 {% endblock %}
