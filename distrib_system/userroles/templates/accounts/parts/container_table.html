@@ -9,18 +9,31 @@
     <th>Руководитель</th>
     <th>Занято/Всего</th>
     <th>Действия</th>
+    <th>Состояние</th>
   </tr>
+    {% for content in triples %}
   <tr>
-  {% for content in pairs %}
+
       <td> {{ content.first_item.container_name }} </td>
       <td> {{ content.first_item.container_director }} </td>
       <td> {{ content.second_item }} / {{ content.first_item.container_capacity }} </td>
       <td>
-          <form action="урл для подачи заявки" method="post">
+          <form action={% url 'choose_distrib:student_make_request' user_id content.first_item.container_type content.first_item.container_type content.first_item.id %}  method="post">
+            {% csrf_token %}
             <input type="submit" name="decline" value="Подать заявку">
           </form>
-          Состояние: Нету/На рассмотрении
       </td>
+       <td>{% if content.third_item %}
+                {% if content.third_item.pop.status == 0 %}
+                    Рассматривается
+                {% elif content.third_item.pop.status == 1 %}
+                    Принята
+                {% elif content.third_item.pop.status == 2 %}
+                    Отклонена
+                {% endif %}
+           {% else %}
+           Нет
+           {% endif %}</td>
   </tr>
   {% endfor %}
 </table>
