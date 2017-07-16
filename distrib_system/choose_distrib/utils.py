@@ -16,14 +16,12 @@ module = importlib.import_module(modulename)
 
 class Pair:
     def __init__(self, first_item, second_item):
-        self.list = []
         self.first_item = first_item
         self.second_item = second_item
 
 
 # list(getattr(module, request_type).objects.all())
 def get_container_with_number_of_occupied_from_db(user, imp_module, request_type):
-
     containers = list(getattr(imp_module, request_type).objects.all())
     list_of_pairs = []
     for container in containers:
@@ -57,23 +55,19 @@ def get_scidir_from_db(user):
 
 def get_practice_requests(user):
     practice_requests = Request.objects.filter(request_type='PRACTICE').filter(container=user.student)
-
     return practice_requests
 
 
 def get_course_requests(user):
     course_requests = Request.objects.filter(request_type='COURSE').filter(container=user.student)
-
     return course_requests
 
 
 def get_lab_requests(user):
     lab_requests = Request.objects.filter(request_type='LAB').filter(container=user.student)
-
     return lab_requests
 
 
 def get_scidir_requests(user):
     scidir_requests = Request.objects.filter(request_type='SCIENCE_HEAD').filter(container=user.student)
-
     return scidir_requests

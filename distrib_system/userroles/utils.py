@@ -28,10 +28,6 @@ def get_entity_from_db(user):
 
 def initialize_user(user, positions):
     for p in positions:
-        group, created = Group.objects.get_or_create(name=p)
-        if created:
-            group.save()
-        user.groups.add(group)
         if p == 'student':
             st = Student(user=user)
             st.save()
