@@ -30,13 +30,13 @@ def student_form(request, user_id, container_type):
 #########################
 
 
-def student_make_request(request, user_id, container_type, container_id):
+def student_make_request(request, user_id, container_type, request_type, container_id):
     user = request.user
     student_request = Request()
     student_request.student = user
     student_request.container = Container.objects.get(id=container_id)
     student_request.status = 0
-    student_request.request_type = container_type
+    student_request.request_type = request_type
     student_request.save()
     return student_form(request, user_id, container_type)
 
@@ -103,7 +103,6 @@ def coop_form(request, user_id, request_type):
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
     return render(request, 'accounts/parts/requests_table_without_buttons.html', context)
-
 
 
 
