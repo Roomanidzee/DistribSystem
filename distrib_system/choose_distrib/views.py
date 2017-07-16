@@ -52,7 +52,7 @@ def professor_form(request, user_id, request_type):
         "requests": requests,
     }
     context.update(base_context(request))
-    return render(request, 'accounts/parts/requests_table.html', context)
+    return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
 
 
 def professor_request_change_status(request, user_id1, request_type, user_id2, status):
@@ -77,7 +77,7 @@ def sci_dir_form(request, user_id):
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    return render(request, 'accounts/parts/requests_table.html', context)
+    return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
 
 
 def sc_dir_request_change_status(request, user_id1, user_id2, request_status):
@@ -102,7 +102,7 @@ def coop_form(request, user_id, request_type):
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    return render(request, 'accounts/parts/container_table.html', context)
+    return render(request, 'accounts/parts/requests_table_without_buttons.html', context)
 
 
 
