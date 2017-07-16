@@ -38,7 +38,7 @@ def student_make_request(request, user_id, container_type, container_id):
     request.student = user
     request.container = Container.objects.get(container_type=container_type, container_director=container_id)
     request.status = 0
-    request.request_type = container_type
+    request.request_type = container_type.upper()
     request.save()
 
 
@@ -58,7 +58,7 @@ def professor_form(request, user_id, request_type):
 def professor_request_change_status(request, user_id1, request_type, user_id2, status):
     user = request.user
     request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type=request_type, container=Container.objects.get(container_director=user))
-    request.status = 1
+    request.status = status
     request.save()
 
 '''
