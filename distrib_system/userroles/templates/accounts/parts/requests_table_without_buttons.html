@@ -1,0 +1,19 @@
+{% extends 'accounts/my_profile.html' %}
+{% block content %}
+<table border="1">
+  <caption>Таблица реквестов</caption>
+  
+  <tr>
+    <th>Кто подал реквест</th>
+    <th>Название контейнера</th>
+    <th>Статус</th>
+  </tr>
+  <tr>
+  {% for req in requests %}
+      <td> {{ req.student }} </td>
+      <td> {{ req.container }} </td>
+      <td> {{ req.status }} </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
