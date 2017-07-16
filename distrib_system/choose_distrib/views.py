@@ -12,18 +12,16 @@ from userroles.views import base_context
     Короче, сюда лезть только готовыми к дикой боли и дебаггингу))
 '''
 '''
-STUDENTS HERE
+    STUDENTS HERE
 '''
 
 
 def student_form(request, user_id, container_type):
     user = request.user
-    list_of_pairs = get_container_with_number_of_occupied_from_db(user, container_type)
-    student_requests = get_requests_for_student(user, container_type.upper())
+    list_of_triples = get_container_with_number_of_occupied_from_db(user, container_type)
     context = {
         'user_id': user_id,
-        'pairs': list_of_pairs,
-        'requests': student_requests,
+        'triples': list_of_triples,
     }
     context.update(base_context(request))
     return render(request, 'accounts/parts/container_table.html', context)
@@ -33,18 +31,20 @@ def student_form(request, user_id, container_type):
 
 
 def student_make_request(request, user_id, container_type, container_id):
-    user = user_id
-    request = Request()
-    request.student = user
-    request.container = Container.objects.get(container_type=container_type, container_director=container_id)
-    request.status = 0
-    request.request_type = container_type.upper()
-    request.save()
+    user = request.user
+    student_request = Request()
+    student_request.student = user
+    student_request.container = Container.objects.get(id=container_id)
+    student_request.status = 0
+    student_request.request_type = container_type
+    student_request.save()
+    return student_form(request, user_id, container_type)
 
 
 '''
 PROFESSORS HERE
 '''
+
 
 def professor_form(request, user_id, request_type):
     user = request.user
@@ -53,13 +53,14 @@ def professor_form(request, user_id, request_type):
         "requests": requests,
     }
     context.update(base_context(request))
-    return render(request, 'accounts/parts/container_table.html', context)
-    
+    return render(request, 'accounts/parts/requests_table.html', context)
+
+
 def professor_request_change_status(request, user_id1, request_type, user_id2, status):
     user = request.user
-    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type=request_type, container=Container.objects.get(container_director=user))
-    request.status = status
-    request.save()
+    student_request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type=request_type, container=Container.objects.get(container_director=user))
+    student_request.status = status
+    student_request.save()
 
 '''
 SCIENCE DIR HERE
@@ -77,13 +78,14 @@ def sci_dir_form(request, user_id):
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    return render(request, 'accounts/parts/container_table.html', context)
+    return render(request, 'accounts/parts/requests_table.html', context)
+
 
 def sc_dir_request_change_status(request, user_id1, user_id2, request_status):
     user = request.user
-    request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user))
-    request.status = request_status
-    request.save()
+    student_request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user))
+    student_request.status = request_status
+    student_request.save()
 
 '''
 COOPERATORS HERE

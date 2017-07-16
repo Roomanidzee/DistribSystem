@@ -16,9 +16,11 @@
       <td> {{ req.status }} </td>
       <td>
         <form action="урл для принятия" method="post">
+            {% csrf_token %}
           <input type="submit" name="accept" value="Принять">
         </form>
         <form action="урл для отказа" method="post">
+            {% csrf_token %}
           <input type="submit" name="decline" value="Отклонить">
         </form>
       </td>

@@ -19,10 +19,10 @@ class Container(models.Model):
         validators=[MaxValueValidator(300), MinValueValidator(0)]
     )
     CONTAINERCHOISE = (
-        ('LAB', 'laboratory'),
-        ('COURSE', 'course'),
-        ('PRACTICE', 'practice'),
-        ('SCIENCE_HEAD', 'science_director')
+        ('Laboratory', 'laboratory'),
+        ('Course', 'course'),
+        ('Practice', 'practice'),
+        ('ScienceHead', 'science_director')
     )
     container_type = models.CharField(max_length=20, choices=CONTAINERCHOISE)
 
@@ -70,10 +70,10 @@ class Request(models.Model):
         choices=STATUS
     )
     REQUESTTYPE = (
-        ('LAB', 'laboratory'),
-        ('COURSE', 'course'),
-        ('PRACTICE', 'practice'),
-        ('SCIENCE_HEAD', 'science_director')
+        ('Laboratory', 'laboratory'),
+        ('Course', 'course'),
+        ('Practice', 'practice'),
+        ('ScienceHead', 'science_director')
     )
     request_type = models.CharField(max_length=20, choices=REQUESTTYPE)
 
