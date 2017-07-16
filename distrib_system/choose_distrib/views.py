@@ -122,4 +122,3 @@ def coop_form(request, user_id, request_type):
 
 
 
-
