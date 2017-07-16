@@ -14,9 +14,10 @@ modulename, dot, classname = 'choose_distrib.models.classname'.rpartition('.')
 module = importlib.import_module(modulename)
 
 
+
 class Triple:
     def __init__(self, first_item, second_item, third_item):
-        self.first_item = first_item
+       self.first_item = first_item
         self.second_item = second_item
         self.third_item = third_item
 
@@ -26,7 +27,6 @@ def get_container_with_number_of_occupied_from_db(user, container_type):
     containers = list(getattr(module, container_type).objects.all())
     list_of_triples = []
     for container in containers:
-
         count = StudentToLabStorage.objects.filter(container=container).distinct().count()
         request_status = list(Request.objects.filter(container=container, student=user))
         triple = Triple(container, count, request_status)
@@ -34,13 +34,11 @@ def get_container_with_number_of_occupied_from_db(user, container_type):
 
     return list_of_triples
 
-
 # Автор следующих четырех функций: Андрей
 def get_containers_from_db(user, container_class):
     containers = getattr(module, container_class).objects.all()
     return list(containers)
 
-
 def get_requests_for_student(user, request_type):
-    requests=list(Request.objects.filter(request_type=request_type, student=user))
+    requests = list(Request.objects.filter(request_type=request_type, student=user))
     return requests

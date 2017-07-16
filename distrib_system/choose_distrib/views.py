@@ -40,7 +40,6 @@ def student_make_request(request, user_id, container_type, container_id):
     student_request.save()
     return student_form(request, user_id, container_type)
 
-
 '''
 PROFESSORS HERE
 '''
