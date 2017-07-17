@@ -60,10 +60,10 @@ def new_logout(request):
 @login_required(login_url='/accounts/login')
 def base_context(request):
     user = request.user
-    is_student = get_entity_from_db(user,'Student')
-    is_cooperator = get_entity_from_db(user,'Cooperator')
-    is_professor = get_entity_from_db(user,'Professor')
-    is_sci_director = get_entity_from_db(user,'ScientificDirector')
+    is_student = get_entity_from_db(user, 'Student')
+    is_cooperator = get_entity_from_db(user, 'Cooperator')
+    is_professor = get_entity_from_db(user, 'Professor')
+    is_sci_director = get_entity_from_db(user, 'ScientificDirector')
     context = {
         "user_id": user.id,
         "user_surname": user.last_name,
