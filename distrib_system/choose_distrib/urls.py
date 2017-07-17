@@ -12,12 +12,12 @@ urlpatterns = [
         url(r'^professor/', 
         include([
             url(r'^(?P<request_type>[A-z]+)/(?P<container_id>[0-9]+)/(?P<user_id2>[0-9]+)/(?P<request_status>[1-2])/$', views.professor_request_change_status, name='professor_request_change_status'),
-            url(r'^(?P<request_type>[A-z]+)/$', views.professor_form, name='professor')])),
+            url(r'^(?P<request_type>[A-z]+)/(?P<action_type>[A-z]+)$', views.professor_form, name='professor')])),
         url(r'^sc_dir/', 
         include([ 
             url(r'^(?P<request_type>[A-z]+)/(?P<container_id>[0-9]+)/(?P<user_id2>[0-9]+)/(?P<request_status>[1-2])/$', views.sc_dir_request_change_status, name='sc_dir_request_change_status')])),
-            url(r'^(?P<request_type>[A-z]+)/$', views.sci_dir_form, name='sc_dir_sci_dir'),
+            url(r'^(?P<request_type>[A-z]+)/(?P<action_type>[A-z]+)$', views.sci_dir_form, name='sc_dir_sci_dir'),
         url(r'^cooperator/', 
         include([
-            url(r'^(?P<request_type>[A-z]+)/$', views.coop_form, name='cooperator')]))
+            url(r'^(?P<request_type>[A-z]+)/(?P<action_type>[A-z]+)$', views.coop_form, name='cooperator')]))
         ]))]
