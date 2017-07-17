@@ -17,7 +17,7 @@ module = importlib.import_module(modulename)
 
 class Triple:
     def __init__(self, first_item, second_item, third_item):
-       self.first_item = first_item
+        self.first_item = first_item
         self.second_item = second_item
         self.third_item = third_item
 

@@ -47,10 +47,14 @@ PROFESSORS HERE
 
 def professor_form(request, user_id, request_type):
     user = request.user
-    requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
-    context = {
-        "requests": requests,
-    }
+    context = {}
+    try:
+        requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
+        context = {
+            "requests": requests,
+        }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
     return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
 
@@ -66,11 +70,11 @@ SCIENCE DIR HERE
 '''
 
 
-def sci_dir_form(request, user_id):
+def sci_dir_form(request, user_id, request_type):
     user = request.user
     context = {}
     try:
-        requests = list(Request.objects.filter(request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user)))
+        requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
         context = {
             "requests": requests,
         }
@@ -103,7 +107,6 @@ def coop_form(request, user_id, request_type):
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
     return render(request, 'accounts/parts/requests_table_without_buttons.html', context)
-
 
 
 

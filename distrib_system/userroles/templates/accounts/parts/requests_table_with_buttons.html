@@ -13,7 +13,17 @@
   {% for req in requests %}
       <td> {{ req.student }} </td>
       <td> {{ req.container }} </td>
-      <td> {{ req.status }} </td>
+      <td> 
+        {% if req.status == 0 %}
+          Рассматривается
+        {% elif req.status == 1 %}
+          Принят
+        {% elif req.status == 2 %}
+          Отклонен
+        {% else %}
+          Неверный статус реквеста: {{ req.status }}
+        {% endif %}
+      </td>
       <td>
         <form action="урл для принятия" method="post">
           {% csrf_token %}

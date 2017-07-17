@@ -30,6 +30,8 @@
                     Принята
                 {% elif content.third_item.pop.status == 2 %}
                     Отклонена
+                {% else %}
+                    Неверный статус реквеста: {{ content.third_item.pop.status }}
                 {% endif %}
            {% else %}
            Нет
