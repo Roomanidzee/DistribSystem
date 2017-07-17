@@ -21,7 +21,6 @@ class Triple:
         self.third_item = third_item
 
 
-# Автор следующих четырех функций: Роман
 def get_container_with_number_of_occupied_from_db(user, container_type):
     containers = list(getattr(module, container_type).objects.all())
     list_of_triples = []

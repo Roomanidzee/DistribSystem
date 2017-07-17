@@ -47,31 +47,14 @@ PROFESSORS HERE
 
 def professor_form(request, user_id, request_type):
     user = request.user
-    requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
-    context = {
-        "requests": requests,
-    }
-    context.update(base_context(request))
-    return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
-
-
-def professor_request_change_status(request, user_id1, request_type, user_id2, status):
-    user = request.user
-    student_request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type=request_type, container=Container.objects.get(container_director=user))
-    student_request.status = status
-    student_request.save()
-
-'''
-SCIENCE DIR HERE
-'''
-
-
-def sci_dir_form(request, user_id):
-    user = request.user
     context = {}
+    containers = list(Container.objects.filter(container_director=user))
+    requests = []
     try:
-        requests = list(Request.objects.filter(request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user)))
+        for container in containers:
+            requests.append(list(Request.objects.filter(request_type=request_type, container=container)))
         context = {
+            'user_id': user_id,
             "requests": requests,
         }
     except:
@@ -80,11 +63,40 @@ def sci_dir_form(request, user_id):
     return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
 
 
-def sc_dir_request_change_status(request, user_id1, user_id2, request_status):
-    user = request.user
-    student_request = Request.objects.get(student=User.objects.get(user_id=user_id2), request_type='SCIENCE_HEAD', container=Container.objects.get(container_director=user))
+def professor_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
+    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
     student_request.status = request_status
     student_request.save()
+    return professor_form(request, user_id, request_type)
+
+'''
+SCIENCE DIR HERE
+'''
+
+
+def sci_dir_form(request, user_id, request_type):
+    user = request.user
+    context = {}
+    containers = Container.objects.filter(container_director=user)
+    requests = []
+    try:
+        for container in containers:
+            requests.append(list(Request.objects.filter(request_type=request_type, container=container)))
+            context = {
+                'user_id': user_id,
+                "requests": requests,
+            }
+    except:
+        messages.add_message(request, messages.INFO, 'Список заявок пуст')
+    context.update(base_context(request))
+    return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
+
+
+def sc_dir_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
+    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
+    student_request.status = request_status
+    student_request.save()
+    return sci_dir_form(request, user_id, request_type)
 
 '''
 COOPERATORS HERE
@@ -95,7 +107,7 @@ def coop_form(request, user_id, request_type):
     user = request.user
     context = {}
     try:
-        requests = list(Request.objects.filter(request_type=request_type, container=Container.objects.get(container_director=user)))
+        requests = list(Request.objects.filter(request_type=request_type))
         context = {
             "requests": requests,
         }

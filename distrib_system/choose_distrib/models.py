@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 class Container(models.Model):
     # Абстрактный контейнер. НЕ СОЗДАВАТЬ ОБЪЕКТЫ, ТОЛЬКО НАСЛЕДНИКИ
     container_name = models.CharField(max_length=100, verbose_name='Название')
-    container_director = models.OneToOneField(User, on_delete=models.CASCADE)
+    container_director = models.ManyToManyField(User)
     container_capacity = models.IntegerField(
         default=0,
         validators=[MaxValueValidator(300), MinValueValidator(0)]
