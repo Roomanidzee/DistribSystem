@@ -71,10 +71,8 @@ def professor_request_change_status(request, user_id, request_type, container_id
     action_type = 'view_requests'
     return professor_form(request, user_id, request_type, action_type)
 
-'''
 SCIENCE DIR HERE
 '''
-
 
 def sci_dir_form(request, user_id, request_type, action_type):
     user = request.user
