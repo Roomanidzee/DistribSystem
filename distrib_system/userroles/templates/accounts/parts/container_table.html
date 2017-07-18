@@ -26,17 +26,19 @@
             <input type="submit" name="decline" value="Подать заявку">
           </form>
       </td>
-       <td>{% if content.third_item %}
-                {% if content.third_item.pop.status == 0 %}
+       <td>
+           {% if content.third_item is not None %}
+                {% if content.third_item is 0 %}
                     Рассматривается
-                {% elif content.third_item.pop.status == 1 %}
+                {% elif content.third_item is 1 %}
                     Принята
-                {% elif content.third_item.pop.status == 2 %}
+                {% elif content.third_item is 2 %}
                     Отклонена
                 {% endif %}
            {% else %}
-           Нет
-           {% endif %}</td>
+                Нет
+           {% endif %}
+       </td>
   </tr>
   {% endfor %}
 </table>

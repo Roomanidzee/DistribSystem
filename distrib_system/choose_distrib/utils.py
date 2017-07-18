@@ -27,7 +27,10 @@ def get_container_with_number_of_occupied_from_db(user, container_type):
     for container in containers:
         count = StudentToLabStorage.objects.filter(container=container).distinct().count()
         request_status = list(Request.objects.filter(container=container, student=user))
-        triple = Triple(container, count, request_status)
+        status = None
+        if request_status:
+            status = request_status.pop().status
+        triple = Triple(container, count, status)
         list_of_triples.append(triple)
 
     return list_of_triples
@@ -37,6 +40,7 @@ def get_container_with_number_of_occupied_from_db(user, container_type):
 def get_containers_from_db(user, container_class):
     containers = getattr(module, container_class).objects.all()
     return list(containers)
+
 
 def get_requests_for_student(user, request_type):
     requests = list(Request.objects.filter(request_type=request_type, student=user))
