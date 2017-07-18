@@ -65,10 +65,15 @@ def professor_form(request, user_id, request_type, action_type):
 
 
 def professor_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
-    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
+    student = User.objects.get(id=user_id2)
+    container = Container.objects.get(id=container_id)
+    student_request = Request.objects.get(student=student, request_type=request_type, container=container)
     student_request.status = request_status
     student_request.save()
     action_type = 'view_requests'
+    storage_object = StudentToLabStorage()
+    storage_object.student = student
+    storage_object.container = container
     return professor_form(request, user_id, request_type, action_type)
 
 '''
@@ -98,10 +103,15 @@ def sci_dir_form(request, user_id, request_type, action_type):
 
 
 def sc_dir_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
-    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
+    student = User.objects.get(id=user_id2)
+    container = Container.objects.get(id=container_id)
+    student_request = Request.objects.get(student=student, request_type=request_type, container=container)
     student_request.status = request_status
     student_request.save()
     action_type = 'view_requests'
+    storage_object = StudentToLabStorage()
+    storage_object.student = student
+    storage_object.container = container
     return sci_dir_form(request, user_id, request_type, action_type)
 
 '''
