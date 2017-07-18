@@ -15,7 +15,10 @@
   <tr>
 
       <td> {{ content.first_item.container_name }} </td>
-      <td> {{ content.first_item.container_director }} </td>
+      <td> {% for director in content.first_item.container_director.all %}
+                {{ director }}
+           {% endfor %}
+      </td>
       <td> {{ content.second_item }} / {{ content.first_item.container_capacity }} </td>
       <td>
           <form action={% url 'choose_distrib:student_make_request' user_id content.first_item.container_type content.first_item.container_type content.first_item.id %}  method="post">
