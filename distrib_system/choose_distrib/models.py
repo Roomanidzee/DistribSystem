@@ -81,7 +81,7 @@ class Request(models.Model):
     change_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        return "{0} {1} - {2}".format(self.student.first_name, self.student.last_name, self.container)
+        return "{0} {1} - {2} :: {3}".format(self.student.first_name, self.student.last_name, self.container, self.send_date)
 
 
 class StudentToLabStorage(models.Model):

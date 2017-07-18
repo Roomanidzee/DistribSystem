@@ -30,12 +30,21 @@ def student_form(request, user_id, container_type):
 
 def student_make_request(request, user_id, container_type, request_type, container_id):
     user = request.user
+    container = Container.objects.get(id=container_id)
+    context = {
+        'user_id': user_id,
+    }
+    context.update(base_context(request))
+    if Request.objects.filter(request_type=request_type, student=user).exclude(status=2):
+        return render(request, 'accounts/parts/request_already_exist.html', context)
+
     student_request = Request()
     student_request.student = user
-    student_request.container = Container.objects.get(id=container_id)
+    student_request.container = container
     student_request.status = 0
     student_request.request_type = request_type
     student_request.save()
+
     return student_form(request, user_id, container_type)
 
 '''
@@ -50,7 +59,7 @@ def professor_form(request, user_id, request_type, action_type):
     requests = []
     try:
         for container in containers:
-            requests.append(list(Request.objects.filter(request_type=request_type, container=container)))
+            requests.append(list(Request.objects.filter(request_type=request_type, container=container).order_by('send_date')))
         context = {
             'user_id': user_id,
             "requests": requests,
@@ -88,7 +97,7 @@ def sci_dir_form(request, user_id, request_type, action_type):
     requests = []
     try:
         for container in containers:
-            requests.append(list(Request.objects.filter(request_type=request_type, container=container)))
+            requests.append(list(Request.objects.filter(request_type=request_type, container=container).order_by('send_date')))
             context = {
                 'user_id': user_id,
                 "requests": requests,

@@ -26,7 +26,7 @@ def get_container_with_number_of_occupied_from_db(user, container_type):
     list_of_triples = []
     for container in containers:
         count = StudentToLabStorage.objects.filter(container=container).distinct().count()
-        request_status = list(Request.objects.filter(container=container, student=user))
+        request_status = list(Request.objects.filter(container=container, student=user).order_by('send_date'))
         status = None
         if request_status:
             status = request_status.pop().status
