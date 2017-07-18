@@ -9,11 +9,13 @@
     <th>Статус</th>
   </tr>
   <tr>
-  {% for req in requests %}
+  {% for list in requests %}
+      {% for req in list %}
       <td> {{ req.student }} </td>
       <td> {{ req.container }} </td>
       <td> {{ req.status }} </td>
   </tr>
+    {% endfor %}
   {% endfor %}
 </table>
 {% endblock %}

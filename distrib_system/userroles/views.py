@@ -1,5 +1,5 @@
+from django.db import IntegrityError
 from django.shortcuts import render
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -18,7 +18,11 @@ def register(request):
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
         user.email = request.POST['email']
-        user.save()
+        try:
+            user.save()
+        except IntegrityError:
+            messages.add_message(request, messages.INFO, 'Этот логин занят')
+            return render(request, 'login.html')
         positions = request.POST.getlist('position')
         initialize_user(user, positions)
         user = authenticate(username=request.POST['username'], password=request.POST['password'])

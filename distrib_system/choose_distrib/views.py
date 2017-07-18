@@ -15,7 +15,8 @@ from userroles.views import base_context
     STUDENTS HERE
 '''
 
-#Авторы : Андрей, Даниил, Роман
+
+# Авторы : Андрей, Даниил, Роман
 def student_form(request, user_id, container_type):
     user = request.user
     list_of_triples = get_container_with_number_of_occupied_from_db(user, container_type)
@@ -25,7 +26,6 @@ def student_form(request, user_id, container_type):
     }
     context.update(base_context(request))
     return render(request, 'accounts/parts/container_table.html', context)
-
 
 
 def student_make_request(request, user_id, container_type, request_type, container_id):
@@ -58,17 +58,22 @@ def professor_form(request, user_id, request_type, action_type):
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    if(action_type == 'view_requests'):
+    if action_type == 'view_requests':
         return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
-    if(action_type == 'print_requests'):
+    if action_type == 'print_requests':
         return render(request, 'accounts/parts/print_template.html', context)
 
 
 def professor_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
-    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
+    student = User.objects.get(id=user_id2)
+    container = Container.objects.get(id=container_id)
+    student_request = Request.objects.get(student=student, request_type=request_type, container=container)
     student_request.status = request_status
     student_request.save()
     action_type = 'view_requests'
+    storage_object = StudentToLabStorage()
+    storage_object.student = student
+    storage_object.container = container
     return professor_form(request, user_id, request_type, action_type)
 
 '''
@@ -91,17 +96,22 @@ def sci_dir_form(request, user_id, request_type, action_type):
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    if(action_type == 'view_requests'):
+    if action_type == 'view_requests':
         return render(request, 'accounts/parts/requests_table_with_buttons.html', context)
-    if(action_type == 'print_requests'):
+    if action_type == 'print_requests':
         return render(request, 'accounts/parts/print_template.html', context)
 
 
 def sc_dir_request_change_status(request, user_id, request_type, container_id, user_id2, request_status):
-    student_request = Request.objects.get(student=User.objects.get(id=user_id2), request_type=request_type, container=Container.objects.get(id=container_id))
+    student = User.objects.get(id=user_id2)
+    container = Container.objects.get(id=container_id)
+    student_request = Request.objects.get(student=student, request_type=request_type, container=container)
     student_request.status = request_status
     student_request.save()
     action_type = 'view_requests'
+    storage_object = StudentToLabStorage()
+    storage_object.student = student
+    storage_object.container = container
     return sci_dir_form(request, user_id, request_type, action_type)
 
 '''
@@ -110,17 +120,18 @@ COOPERATORS HERE
 
 
 def coop_form(request, user_id, request_type, action_type):
-    user = request.user
     context = {}
+    requests = []
     try:
-        requests = list(Request.objects.filter(request_type=request_type))
+        requests.append(list(Request.objects.filter(request_type=request_type)))
         context = {
+            'user_id': user_id,
             "requests": requests,
         }
     except:
         messages.add_message(request, messages.INFO, 'Список заявок пуст')
     context.update(base_context(request))
-    if(action_type == 'view_requests'):
+    if action_type == 'view_requests':
         return render(request, 'accounts/parts/requests_table_without_buttons.html', context)
-    if(action_type == 'print_requests'):
+    if action_type == 'print_requests':
         return render(request, 'accounts/parts/print_template.html', context)

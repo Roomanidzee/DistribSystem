@@ -80,7 +80,13 @@ class Request(models.Model):
     send_date = models.DateTimeField(auto_now_add=True)
     change_date = models.DateField(auto_now=True)
 
+    def __str__(self):
+        return "{0} {1} - {2}".format(self.student.first_name, self.student.last_name, self.container)
+
 
 class StudentToLabStorage(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     container = models.ForeignKey(Container, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{0} {1} - {2}".format(self.student.first_name, self.student.last_name, self.container)
