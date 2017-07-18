@@ -92,9 +92,9 @@ SCIENCE DIR HERE
 
 def sci_dir_form(request, user_id, request_type, action_type):
     user = request.user
-    context = {}
     containers = Container.objects.filter(container_director=user)
     requests = []
+    context = {}
     try:
         for container in containers:
             requests.append(list(Request.objects.filter(request_type=request_type, container=container).order_by('send_date')))
