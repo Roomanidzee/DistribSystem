@@ -1,38 +1,56 @@
 {% extends 'accounts/my_profile.html' %}
 {% block content %}
-<table border="1">
-  <caption>Таблица реквестов</caption>
-  
-  <tr>
-    <th>Кто подал реквест</th>
-    <th>Название контейнера</th>
-    <th>Статус</th>
-    <th>Действие</th>
-  </tr>
-  <tr>
-  {% for list in requests %}
-        {% for req in list %}
-        <td> {{ req.student }} </td>
-        <td> {{ req.container }} </td>
-        <td> {% if req.status == 0 %}
-                    Рассматривается
-                {% elif req.status == 1 %}
-                    Принята
+<div class="panel panel-default">
+  <div class="panel-heading">Все запросы</div>
+  {% if requests %}
+    <table class="table table-hover">
+      <thead>
+          <tr>
+            <th class="col-sm-1 bg-primary"></th>
+            <th class="col-lg-4 bg-primary th-align-and-text-size">ФИО Студента</th>
+            <th class="col-lg-4 bg-primary th-align-and-text-size">Деятельность</th>
+            <th class="col-lg-4 bg-primary"></th>
+          </tr>
+      </thead>
+      <tbody class="table-striped">
+          {% for list in requests %}
+            {% for req in list %}
+              <tr>
+                <th scope="row" align="center"></th>
+                <td align="center"><span id="space">{{ req.student.first_name }} {{ req.student.last_name }}<br>{{ req.student.email }}</span></td>
+                <td align="center">{{ req.container }}</td>
+                <td>
+                  <div align="center" id="butn{{ req.id }}">
+                    <div class="col-lg-4">
+                      <form action="{% url 'choose_distrib:professor_request_change_status'  user_id   req.request_type   req.container.id   req.student.id   1 %}" method="post">
+                        {% csrf_token %}  
+                        <button type="submit" id="success{{ req.id }}" value="Принять" name="accept" name="decline" class="btn btn-success">Принять</button>
+                      </form>
+                    </div>
+                    <div class="col-lg-4">
+                      <form action="{% url 'choose_distrib:professor_request_change_status'  user_id   req.request_type   req.container.id   req.student.id   2 %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="cancel{{ req.id }}" value="Отклонить" name="decline" class="btn btn-danger">Отклонить</button>
+                      </form>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <script type="text/javascript">
+                {% if req.status == 1 %}
+                  document.getElementById('butn{{ req.id }}').innerHTML = '<p>Принято</p>';
                 {% elif req.status == 2 %}
-                    Отклонена
-                {% endif %} </td>
-        <td>
-            <form action="{% url 'choose_distrib:professor_request_change_status'  user_id   req.request_type   req.container.id   req.student.id   1 %}" method="post">
-            {% csrf_token %}
-            <input type="submit" name="accept" value="Принять">
-            </form>
-            <form action="{% url 'choose_distrib:professor_request_change_status'  user_id   req.request_type   req.container.id   req.student.id   2 %}" method="post">
-            {% csrf_token %}
-            <input type="submit" name="decline" value="Отклонить">
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-  {% endfor %}
-</table>
+                  document.getElementById('butn{{ req.id }}').innerHTML = '<p>Отклонено</p>';
+                {% else %}
+                  document.getElementById('butn{{ req.id }}').innerHTML = '<p>Неверный статус реквеста: {{ req.status }}</p>';
+                {% endif %}
+              </script>
+            {% endfor %}
+          {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <h2>На текущий момент нет запросов.</h2>
+  {% endif %}
+</div>
 {% endblock %}

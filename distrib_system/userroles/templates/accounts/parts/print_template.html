@@ -9,7 +9,7 @@
   <tr>
   {% for list in requests %}
         {% for req in list %}
-        <td> {{ req.student }} </td>
+        <td> {{ req.student.first_name }} {{ req.student.last_name }}<br>{{ req.student.email }}</td>
         <td> {{ req.container }} </td>
         <td> {% if req.status == 0 %}
                     Рассматривается
